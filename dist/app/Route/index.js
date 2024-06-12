@@ -4,8 +4,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const User_route_1 = require("../Midleware/User/User.route");
+const User_route_1 = require("../Modules/User/User.route");
 const Router = express_1.default.Router();
+// rLHMYKDHj3nxWeqo
 const moduleRoute = [{
         path: "/user",
         Route: User_route_1.UserRoute

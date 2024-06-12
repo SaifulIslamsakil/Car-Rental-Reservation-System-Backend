@@ -1,10 +1,9 @@
 import express from "express"
-import app from "../../app";
-import { UserRoute } from "../Midleware/User/User.route";
+import { UserRoute } from "../Modules/User/User.route";
 
 const Router= express.Router()
 
-
+// rLHMYKDHj3nxWeqo
 const moduleRoute = [{
     path:"/user",
     Route : UserRoute

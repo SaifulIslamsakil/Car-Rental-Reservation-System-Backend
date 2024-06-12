@@ -1,8 +1,11 @@
+import mongoose from "mongoose";
 import app from "./app"
+import { Confiqe } from "./app/Confiqe";
 
-const main = ()=>{
-    app.listen(process.env.PORT || 5000, ()=>{
-        console.log(`server in runing on port ${5000}`)
+const main = async () => {
+    await mongoose.connect(Confiqe.Database_Url as string);
+    app.listen(Confiqe.Port, () => {
+        console.log(`server in runing on port ${Confiqe.Port}`)
     })
 }
 
