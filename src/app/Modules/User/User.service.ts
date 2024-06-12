@@ -16,6 +16,9 @@ const getAllUserFormDB = async () => {
 
 const getSingelUserFormDB = async (id: string) => {
     const result = await UserModel.findById(id)
+    // if (!result) {
+    //     throw new Error("user in not exsist")
+    // }
     return result
 }
 

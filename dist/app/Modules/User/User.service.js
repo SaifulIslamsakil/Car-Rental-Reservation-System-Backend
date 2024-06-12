@@ -24,6 +24,9 @@ const getAllUserFormDB = () => __awaiter(void 0, void 0, void 0, function* () {
 });
 const getSingelUserFormDB = (id) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield User_model_1.UserModel.findById(id);
+    // if (!result) {
+    //     throw new Error("user in not exsist")
+    // }
     return result;
 });
 const deletedUserFormDb = (id) => __awaiter(void 0, void 0, void 0, function* () {
