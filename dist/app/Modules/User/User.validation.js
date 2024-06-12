@@ -3,12 +3,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.userValidation = void 0;
 const zod_1 = require("zod");
 const userValidationSchema = zod_1.z.object({
-    name: zod_1.z.string(),
-    email: zod_1.z.string(),
-    role: zod_1.z.string(),
-    passwors: zod_1.z.string(),
-    phone: zod_1.z.string(),
-    address: zod_1.z.string()
+    name: zod_1.z.string().nonempty({ message: "Name is required" }),
+    email: zod_1.z.string().email({ message: "Invalid email address" }),
+    role: zod_1.z.enum(["user", "admin"]).optional(),
+    password: zod_1.z.string().min(1, { message: "Password is required" }),
+    phone: zod_1.z.string().nonempty({ message: "Phone number is required" }),
+    address: zod_1.z.string().nonempty({ message: "Address is required" })
 });
 exports.userValidation = {
     userValidationSchema

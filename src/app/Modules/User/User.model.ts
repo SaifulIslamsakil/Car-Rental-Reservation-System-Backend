@@ -2,30 +2,32 @@ import { Schema, model } from "mongoose";
 import { TUser } from "./User.interface";
 
 const UserSchema = new Schema<TUser>({
-    name:{
-        type:String,
-        required:true
+    name: {
+        type: String,
+        required: true
     },
-    email:{
-        type : String,
-        required:true,
-        unique:true
+    email: {
+        type: String,
+        required: true,
+        unique: true
     },
-    role:{
-        type:String,
-        enum:["user", "admin"]
+    role: {
+        type: String,
+        enum: ["user", "admin"]
     },
-    passwors:{
-        type:String
+    passwors: {
+        type: String
     },
-    phone:{
-        type:String,
-        required:true
+    phone: {
+        type: String,
+        required: true
     },
-    address:{
-        type:String,
-        required:true
+    address: {
+        type: String,
+        required: true
     }
+}, {
+    timestamps: true
 })
 
 

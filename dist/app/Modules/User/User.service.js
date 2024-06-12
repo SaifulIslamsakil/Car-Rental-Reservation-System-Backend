@@ -8,27 +8,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UserController = void 0;
-const User_service_1 = require("./User.service");
-const http_status_1 = __importDefault(require("http-status"));
-const createUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const body = req.body;
-        const result = yield User_service_1.UserService.createUserIntoDB(body);
-        res.status(http_status_1.default.OK).json({
-            success: true,
-            messges: "user is created successfully",
-            data: result
-        });
-    }
-    catch (error) {
-        next(error);
-    }
+exports.UserService = void 0;
+const User_model_1 = require("./User.model");
+const User_validation_1 = require("./User.validation");
+const createUserIntoDB = (payload) => __awaiter(void 0, void 0, void 0, function* () {
+    const validation = User_validation_1.userValidation.userValidationSchema.parse(payload);
+    console.log({ validation });
+    const result = yield User_model_1.UserModel.create(payload);
+    return result;
 });
-exports.UserController = {
-    createUser
+exports.UserService = {
+    createUserIntoDB
 };
