@@ -7,4 +7,6 @@ const GlobalErrorHandling = (err, req, res, next) => {
         path: "",
         message: ""
     };
+    console.log(err);
 };
+exports.default = GlobalErrorHandling;
