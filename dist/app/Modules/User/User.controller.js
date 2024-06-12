@@ -9,7 +9,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const createUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const body = req.body;
-    console.log(body);
+exports.UserController = void 0;
+const createUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const body = req.body;
+        console.log(body);
+    }
+    catch (error) {
+        next(error);
+    }
 });
+exports.UserController = {
+    createUser
+};

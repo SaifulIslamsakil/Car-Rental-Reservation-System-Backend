@@ -3,7 +3,7 @@ import { UserRoute } from "../Modules/User/User.route";
 
 const Router= express.Router()
 
-// rLHMYKDHj3nxWeqo
+
 const moduleRoute = [{
     path:"/user",
     Route : UserRoute
