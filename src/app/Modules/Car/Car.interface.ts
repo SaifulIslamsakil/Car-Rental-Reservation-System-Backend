@@ -8,5 +8,5 @@ export type TCar = {
     status:"available" | "not available";
     features:string[];
     pricePerHour:number;
-    isDeleted :boolean
+    isDeleted?:boolean
 }
