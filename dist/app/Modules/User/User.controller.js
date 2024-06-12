@@ -29,6 +29,66 @@ const createUser = (req, res, next) => __awaiter(void 0, void 0, void 0, functio
         next(error);
     }
 });
+const getAllUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const result = yield User_service_1.UserService.getAllUserFormDB();
+        res.status(http_status_1.default.OK).json({
+            success: true,
+            messges: "all user is resivied successfully",
+            data: result
+        });
+    }
+    catch (error) {
+        next(error);
+    }
+});
+const getSingelUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { userId } = req.params;
+        const result = yield User_service_1.UserService.getSingelUserFormDB(userId);
+        res.status(http_status_1.default.OK).json({
+            success: true,
+            messges: "singel user is resivied successfully",
+            data: result
+        });
+    }
+    catch (error) {
+        next(error);
+    }
+});
+const deletedUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { userId } = req.params;
+        const result = yield User_service_1.UserService.deletedUserFormDb(userId);
+        res.status(http_status_1.default.OK).json({
+            success: true,
+            messges: "user is deleted successfully",
+            data: result
+        });
+    }
+    catch (error) {
+        next(error);
+    }
+});
+const updatedUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { userId } = req.params;
+        const body = req.body;
+        const result = yield User_service_1.UserService.updateUserIntoDB(userId, body);
+        res.status(http_status_1.default.OK).json({
+            success: true,
+            messges: "user is deleted successfully",
+            data: result
+        });
+    }
+    catch (error) {
+        next(error);
+    }
+});
 exports.UserController = {
-    createUser
+    createUser,
+    getAllUser,
+    getSingelUser,
+    deletedUser,
+    updatedUser
 };
