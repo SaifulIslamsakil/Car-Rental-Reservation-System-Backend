@@ -4,6 +4,7 @@ import { ZodError } from "zod";
 import { Confiqe } from "../Confiqe";
 import handelZodError from "../Errors/HandelZodError";
 import handleMongooseValidationError from "../Errors/HandleMongooseValidationError";
+import handeMongooseCastError from "../Errors/HandelMongooseCastError";
 
 
 
@@ -24,11 +25,23 @@ const GlobalErrorHandling = (err: any, req: Request, res: Response, next: NextFu
         errorSources = simplifiedError?.errorSources
 
     }
-    else if (err.name === 'ValidationError') {
+    else if (err?.name === 'ValidationError') {
         const simplifiedError = handleMongooseValidationError(err);
         statusCode = simplifiedError?.statusCode;
         message = simplifiedError?.message;
         errorSources = simplifiedError?.errorSources;
+    }
+    else if(err?.name ==="CastError"){
+        const simplifiedError = handeMongooseCastError(err);
+        statusCode = simplifiedError?.statusCode;
+        message = simplifiedError?.message;
+        errorSources = simplifiedError?.errorSources;  
+    }
+    else if(err?.code === 11000){
+        const simplifiedError = handeMongooseCastError(err);
+        statusCode = simplifiedError?.statusCode;
+        message = simplifiedError?.message;
+        errorSources = simplifiedError?.errorSources; 
     }
 
     return res.status(500).json({
