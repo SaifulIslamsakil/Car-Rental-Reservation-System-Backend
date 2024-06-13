@@ -1,5 +1,7 @@
 import { Schema, model } from "mongoose";
-import { TUser } from "./User.interface";
+import { TUser } from "./Auth.interface";
+import bcrypt from 'bcrypt';
+import { Confiqe } from "../../Confiqe";
 
 const UserSchema = new Schema<TUser>({
     name: {
@@ -15,7 +17,7 @@ const UserSchema = new Schema<TUser>({
         type: String,
         enum: ["user", "admin"]
     },
-    passwors: {
+    password: {
         type: String
     },
     phone: {
@@ -30,5 +32,20 @@ const UserSchema = new Schema<TUser>({
     timestamps: true
 })
 
+
+UserSchema.pre("save", async function (next) {
+  const user = this; // doc
+  // hashing password and save into DB
+  user.password = await bcrypt.hash(
+    user.password,
+    Number(Confiqe.Salt_Rounds),
+  );
+  next()
+})
+
+UserSchema.post("save", function(doc, next){
+    this.password = "",
+    next()
+})
 
 export const UserModel = model<TUser>("user", UserSchema)

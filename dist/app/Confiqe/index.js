@@ -10,7 +10,7 @@ dotenv_1.default.config(({ path: path_1.default.join(process.cwd(), ".env") }));
 exports.Confiqe = {
     Port: process.env.PORT,
     Database_Url: process.env.DATABASE_URL,
-    Bycript: process.env.BYCRIPT,
+    Salt_Rounds: process.env.SALT_ROUNDS,
     Access_Token: process.env.ACCESS_TOKEN,
     REFARWESH_TOKEN: process.env.REFARWESH_TOKEN,
 };

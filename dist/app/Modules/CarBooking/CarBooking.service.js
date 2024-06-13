@@ -11,7 +11,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CarBookingService = void 0;
 const CarBooking_model_1 = require("./CarBooking.model");
+const CarBooking_validation_1 = require("./CarBooking.validation");
 const createCarBookingIntoDB = (payload) => __awaiter(void 0, void 0, void 0, function* () {
+    const validation = CarBooking_validation_1.CarBookingValidation.carBookingValidationSchema.parse(payload);
+    console.log(validation);
     const result = yield CarBooking_model_1.CarBookingModel.create(payload);
     return result;
 });

@@ -1,7 +1,11 @@
 import { TCarBooking } from "./CarBooking.interface";
 import { CarBookingModel } from "./CarBooking.model";
+import { CarBookingValidation } from "./CarBooking.validation";
 
 const createCarBookingIntoDB = async(payload:TCarBooking)=>{
+
+    const validation = CarBookingValidation.carBookingValidationSchema.parse(payload)
+    console.log(validation)
     const result = await CarBookingModel.create(payload)
 
     return result

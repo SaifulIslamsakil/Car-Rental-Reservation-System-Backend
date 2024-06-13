@@ -1,6 +1,6 @@
-import { TUser } from "./User.interface";
-import { UserModel } from "./User.model";
-import { userValidation } from "./User.validation";
+import { TUser } from "./Auth.interface";
+import { UserModel } from "./Auth.model";
+import { userValidation } from "./Auth.validation";
 
 const createUserIntoDB = async (payload: TUser) => {
     const validation = userValidation.userValidationSchema.parse(payload)

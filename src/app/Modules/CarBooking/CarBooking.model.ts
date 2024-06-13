@@ -7,7 +7,7 @@ const CarBookingSchema = new mongoose.Schema({
     },
     user: {
         type: Schema.Types.ObjectId,
-        ref: 'User',
+        ref: ' User',
         required: true,
     },
     car: {
@@ -30,5 +30,5 @@ const CarBookingSchema = new mongoose.Schema({
 });
 
 
- export const CarBookingModel = model<TCarBooking>("CarBooking", CarBookingSchema)
+export const CarBookingModel = model<TCarBooking>("CarBooking", CarBookingSchema)
 

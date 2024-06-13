@@ -10,7 +10,7 @@ app.use(cors())
 
 // use Route
 
-app.use("/api/v1", Router)
+app.use("/api", Router)
 
 app.get('/', (req, res) => {
     res.send('Hello World!')
