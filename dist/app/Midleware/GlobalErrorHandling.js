@@ -8,6 +8,7 @@ const Confiqe_1 = require("../Confiqe");
 const HandelZodError_1 = __importDefault(require("../Errors/HandelZodError"));
 const HandleMongooseValidationError_1 = __importDefault(require("../Errors/HandleMongooseValidationError"));
 const HandelMongooseCastError_1 = __importDefault(require("../Errors/HandelMongooseCastError"));
+const AppError_1 = __importDefault(require("../Errors/AppError"));
 const GlobalErrorHandling = (err, req, res, next) => {
     let statusCode = 500;
     let message = err.message || 'Something went wrong!';
@@ -41,7 +42,20 @@ const GlobalErrorHandling = (err, req, res, next) => {
         message = simplifiedError === null || simplifiedError === void 0 ? void 0 : simplifiedError.message;
         errorSources = simplifiedError === null || simplifiedError === void 0 ? void 0 : simplifiedError.errorSources;
     }
-    else if () {
+    else if (err instanceof AppError_1.default) {
+        statusCode = err === null || err === void 0 ? void 0 : err.statusCode;
+        message = err === null || err === void 0 ? void 0 : err.message;
+        errorSources = [{
+                path: '',
+                message: err === null || err === void 0 ? void 0 : err.message,
+            }];
+    }
+    else if (err instanceof Error) {
+        message = err === null || err === void 0 ? void 0 : err.message;
+        errorSources = [{
+                path: '',
+                message: err === null || err === void 0 ? void 0 : err.message,
+            }];
     }
     return res.status(500).json({
         success: false,
