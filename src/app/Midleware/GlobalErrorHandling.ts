@@ -1,17 +1,36 @@
 import { NextFunction, Request, Response } from "express";
-import { TErrorSources } from "../Interface/ErrorSources";
+import { TErrorSources } from "../Interface/Error.interface";
+import { ZodError } from "zod";
+import { Confiqe } from "../Confiqe";
+import handelZodError from "../Errors/HandelZodError";
 
 
 
 const GlobalErrorHandling = (err: any, req: Request, res: Response, next: NextFunction) => {
-    let status = 500
+    let statusCode = 500
     let message = err.message || 'Something went wrong!'
-    let errorSources: TErrorSources = {
-        path: "",
-        message: ""
+    let errorSources: TErrorSources = [
+        {
+            path: "",
+            message: ""
+        }
+    ]
+
+    if(err instanceof ZodError){
+        const simplifiedError =  handelZodError(err)
+        statusCode = simplifiedError?.statusCode
+        message = simplifiedError?.message
+        errorSources = simplifiedError?.errorSources
+
     }
 
-    console.log(err)
+    return res.status(500).json({
+        success: false,
+        message,
+        errorSources,
+        err,
+        stack: Confiqe.Node_Env === 'development' ? err?.stack : null,
+    });
 }
 
 export default GlobalErrorHandling
