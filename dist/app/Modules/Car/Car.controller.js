@@ -18,6 +18,7 @@ const http_status_1 = __importDefault(require("http-status"));
 const createCar = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const body = req.body;
+        console.log(body);
         const result = yield Car_service_1.CarService.createCarIntoDB(body);
         res.status(http_status_1.default.OK).json({
             success: true,

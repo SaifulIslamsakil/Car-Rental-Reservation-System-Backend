@@ -8,3 +8,6 @@ route.get("/", CarController.getAllCar)
 route.get("/:carId", CarController.getSingelCar)
 route.delete("/:carId", CarController.deleteCar)
 route.patch("/:carId", CarController.updateCar)
+
+
+export const CarRoute = route

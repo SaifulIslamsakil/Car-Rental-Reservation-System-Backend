@@ -18,6 +18,8 @@ const getSingelCarFormDB = async (id: string) => {
 const deleteCarFormDB = async (id: string) => {
     const result = await CarModel.findByIdAndUpdate(id, {
         isDeleted: true
+    },{
+        new:true
     })
     return result
 }

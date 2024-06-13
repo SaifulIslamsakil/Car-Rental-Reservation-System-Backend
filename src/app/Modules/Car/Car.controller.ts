@@ -6,6 +6,7 @@ const createCar = async (req: Request, res: Response, next: NextFunction
 ) => {
     try {
         const body = req.body
+        console.log(body)
         const result = await CarService.createCarIntoDB(body)
         res.status(httpStatus.OK).json({
             success: true,

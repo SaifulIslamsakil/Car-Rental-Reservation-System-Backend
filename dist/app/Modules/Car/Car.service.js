@@ -26,6 +26,8 @@ const getSingelCarFormDB = (id) => __awaiter(void 0, void 0, void 0, function* (
 const deleteCarFormDB = (id) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield Car_model_1.CarModel.findByIdAndUpdate(id, {
         isDeleted: true
+    }, {
+        new: true
     });
     return result;
 });
