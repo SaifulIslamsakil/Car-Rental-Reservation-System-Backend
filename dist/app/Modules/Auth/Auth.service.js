@@ -11,10 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserService = void 0;
 const Auth_model_1 = require("./Auth.model");
-const Auth_validation_1 = require("./Auth.validation");
 const createUserIntoDB = (payload) => __awaiter(void 0, void 0, void 0, function* () {
-    const validation = Auth_validation_1.userValidation.userValidationSchema.parse(payload);
-    console.log({ validation });
     const result = yield Auth_model_1.UserModel.create(payload);
     return result;
 });

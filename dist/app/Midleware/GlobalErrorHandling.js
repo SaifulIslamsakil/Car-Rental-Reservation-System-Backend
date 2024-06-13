@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const zod_1 = require("zod");
 const Confiqe_1 = require("../Confiqe");
 const HandelZodError_1 = __importDefault(require("../Errors/HandelZodError"));
+const HandleMongooseValidationError_1 = __importDefault(require("../Errors/HandleMongooseValidationError"));
 const GlobalErrorHandling = (err, req, res, next) => {
     let statusCode = 500;
     let message = err.message || 'Something went wrong!';
@@ -17,6 +18,12 @@ const GlobalErrorHandling = (err, req, res, next) => {
     ];
     if (err instanceof zod_1.ZodError) {
         const simplifiedError = (0, HandelZodError_1.default)(err);
+        statusCode = simplifiedError === null || simplifiedError === void 0 ? void 0 : simplifiedError.statusCode;
+        message = simplifiedError === null || simplifiedError === void 0 ? void 0 : simplifiedError.message;
+        errorSources = simplifiedError === null || simplifiedError === void 0 ? void 0 : simplifiedError.errorSources;
+    }
+    else if (err.name === 'ValidationError') {
+        const simplifiedError = (0, HandleMongooseValidationError_1.default)(err);
         statusCode = simplifiedError === null || simplifiedError === void 0 ? void 0 : simplifiedError.statusCode;
         message = simplifiedError === null || simplifiedError === void 0 ? void 0 : simplifiedError.message;
         errorSources = simplifiedError === null || simplifiedError === void 0 ? void 0 : simplifiedError.errorSources;

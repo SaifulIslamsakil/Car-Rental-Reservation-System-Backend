@@ -1,10 +1,8 @@
 import { TUser } from "./Auth.interface";
 import { UserModel } from "./Auth.model";
-import { userValidation } from "./Auth.validation";
+
 
 const createUserIntoDB = async (payload: TUser) => {
-    const validation = userValidation.userValidationSchema.parse(payload)
-    console.log({ validation })
     const result = await UserModel.create(payload)
     return result
 }

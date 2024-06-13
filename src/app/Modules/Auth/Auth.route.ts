@@ -5,7 +5,7 @@ import { userValidation } from './Auth.validation'
 
 const Route = express.Router()
 
-Route.post("/create-user", ValidationRequest(userValidation.userValidationSchema),UserController.createUser)
+Route.post("/create-user", UserController.createUser)
 Route.get("/", UserController.getAllUser)
 Route.get("/:userId", UserController.getSingelUser)
 Route.delete("/:userId", UserController.deletedUser)
