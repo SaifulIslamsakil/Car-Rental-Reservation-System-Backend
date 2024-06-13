@@ -43,6 +43,9 @@ const GlobalErrorHandling = (err: any, req: Request, res: Response, next: NextFu
         message = simplifiedError?.message;
         errorSources = simplifiedError?.errorSources; 
     }
+    else if (){
+        
+    }
 
     return res.status(500).json({
         success: false,

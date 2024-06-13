@@ -41,6 +41,8 @@ const GlobalErrorHandling = (err, req, res, next) => {
         message = simplifiedError === null || simplifiedError === void 0 ? void 0 : simplifiedError.message;
         errorSources = simplifiedError === null || simplifiedError === void 0 ? void 0 : simplifiedError.errorSources;
     }
+    else if () {
+    }
     return res.status(500).json({
         success: false,
         message,
