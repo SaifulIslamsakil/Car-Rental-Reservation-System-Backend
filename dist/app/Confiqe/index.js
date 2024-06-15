@@ -12,6 +12,8 @@ exports.Confiqe = {
     Node_Env: process.env.NODE_ENV,
     Database_Url: process.env.DATABASE_URL,
     Salt_Rounds: process.env.SALT_ROUNDS,
-    Access_Token: process.env.ACCESS_TOKEN,
-    REFARWESH_TOKEN: process.env.REFARWESH_TOKEN,
+    Access_Secret: process.env.ACCESS_TOKEN,
+    Refaresh_Secret: process.env.REFRESH_TOKEN,
+    Accress_Expires: process.env.ACCRESS_EXPTRES,
+    Refaresh_Expires: process.env.REFARESH_EXPTRES
 };

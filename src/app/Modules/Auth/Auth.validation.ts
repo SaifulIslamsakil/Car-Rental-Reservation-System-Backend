@@ -9,7 +9,14 @@ const userValidationSchema = z.object({
     address: z.string().nonempty({ message: "Address is required" })
 });
 
+const loginUserValidationSchema = z.object({
+    email: z.string().email({ message: "Invalid email address" }),
+    password: z.string().min(1, { message: "Password is required" }),
+
+})
+
 
 export const userValidation = {
-    userValidationSchema
+    userValidationSchema,
+    loginUserValidationSchema
 }

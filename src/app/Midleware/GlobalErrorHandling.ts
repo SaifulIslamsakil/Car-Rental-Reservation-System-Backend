@@ -6,7 +6,7 @@ import handelZodError from "../Errors/HandelZodError";
 import handleMongooseValidationError from "../Errors/HandleMongooseValidationError";
 import handeMongooseCastError from "../Errors/HandelMongooseCastError";
 import AppError from "../Errors/AppError";
-
+import handelMongooseDuplicateError from "../Errors/HandelMongooseDuplicateError";
 
 
 const GlobalErrorHandling = (err: any, req: Request, res: Response, next: NextFunction) => {
@@ -39,7 +39,7 @@ const GlobalErrorHandling = (err: any, req: Request, res: Response, next: NextFu
         errorSources = simplifiedError?.errorSources;
     }
     else if (err?.code === 11000) {
-        const simplifiedError = handeMongooseCastError(err);
+        const simplifiedError = handelMongooseDuplicateError(err);
         statusCode = simplifiedError?.statusCode;
         message = simplifiedError?.message;
         errorSources = simplifiedError?.errorSources;
@@ -60,7 +60,7 @@ const GlobalErrorHandling = (err: any, req: Request, res: Response, next: NextFu
         }]
     }
 
-    return res.status(500).json({
+    return res.status(statusCode).json({
         success: false,
         message,
         errorSources,

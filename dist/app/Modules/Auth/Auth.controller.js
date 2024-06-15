@@ -15,80 +15,65 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserController = void 0;
 const Auth_service_1 = require("./Auth.service");
 const http_status_1 = __importDefault(require("http-status"));
-const createUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const body = req.body;
-        const result = yield Auth_service_1.UserService.createUserIntoDB(body);
-        res.status(http_status_1.default.OK).json({
-            success: true,
-            messges: "user is created successfully",
-            data: result
-        });
-    }
-    catch (error) {
-        next(error);
-    }
-});
-const getAllUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const result = yield Auth_service_1.UserService.getAllUserFormDB();
-        res.status(http_status_1.default.OK).json({
-            success: true,
-            messges: "all user is resivied successfully",
-            data: result
-        });
-    }
-    catch (error) {
-        next(error);
-    }
-});
-const getSingelUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const { userId } = req.params;
-        const result = yield Auth_service_1.UserService.getSingelUserFormDB(userId);
-        res.status(http_status_1.default.OK).json({
-            success: true,
-            messges: "singel user is resivied successfully",
-            data: result
-        });
-    }
-    catch (error) {
-        next(error);
-    }
-});
-const deletedUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const { userId } = req.params;
-        const result = yield Auth_service_1.UserService.deletedUserFormDb(userId);
-        res.status(http_status_1.default.OK).json({
-            success: true,
-            messges: "user is deleted successfully",
-            data: result
-        });
-    }
-    catch (error) {
-        next(error);
-    }
-});
-const updatedUser = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const { userId } = req.params;
-        const body = req.body;
-        const result = yield Auth_service_1.UserService.updateUserIntoDB(userId, body);
-        res.status(http_status_1.default.OK).json({
-            success: true,
-            messges: "user is deleted successfully",
-            data: result
-        });
-    }
-    catch (error) {
-        next(error);
-    }
-});
+const catchAsync_1 = __importDefault(require("../../Utiles/catchAsync"));
+const createUser = (0, catchAsync_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const body = req.body;
+    const result = yield Auth_service_1.UserService.createUserIntoDB(body);
+    res.status(http_status_1.default.OK).json({
+        success: true,
+        messges: "user is created successfully",
+        data: result
+    });
+}));
+const loginUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield Auth_service_1.UserService.loginUser(req === null || req === void 0 ? void 0 : req.body);
+    res.status(http_status_1.default.OK).json({
+        success: true,
+        messges: "user is created successfully",
+        data: result
+    });
+}));
+const getAllUser = (0, catchAsync_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield Auth_service_1.UserService.getAllUserFormDB();
+    res.status(http_status_1.default.OK).json({
+        success: true,
+        messges: "all user is resivied successfully",
+        data: result
+    });
+}));
+const getSingelUser = (0, catchAsync_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const { userId } = req.params;
+    const result = yield Auth_service_1.UserService.getSingelUserFormDB(userId);
+    res.status(http_status_1.default.OK).json({
+        success: true,
+        messges: "singel user is resivied successfully",
+        data: result
+    });
+}));
+const deletedUser = (0, catchAsync_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const { userId } = req.params;
+    const result = yield Auth_service_1.UserService.deletedUserFormDb(userId);
+    res.status(http_status_1.default.OK).json({
+        success: true,
+        messges: "user is deleted successfully",
+        data: result
+    });
+}));
+const updatedUser = (0, catchAsync_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const { userId } = req.params;
+    const body = req.body;
+    const result = yield Auth_service_1.UserService.updateUserIntoDB(userId, body);
+    res.status(http_status_1.default.OK).json({
+        success: true,
+        messges: "user is deleted successfully",
+        data: result
+    });
+}));
 exports.UserController = {
     createUser,
     getAllUser,
     getSingelUser,
     deletedUser,
-    updatedUser
+    updatedUser,
+    loginUser
 };

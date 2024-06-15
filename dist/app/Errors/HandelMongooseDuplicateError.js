@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const handelMongooseDuplicateError = (err) => {
     // Extract value within double quotes using regex
     const match = err.message.match(/"([^"]*)"/);
+    console.log(err.message);
     // The extracted value will be in the first capturing group
     const extractedMessage = match && match[1];
     const errorSources = [
@@ -18,3 +19,4 @@ const handelMongooseDuplicateError = (err) => {
         errorSources
     };
 };
+exports.default = handelMongooseDuplicateError;

@@ -10,6 +10,11 @@ const userValidationSchema = zod_1.z.object({
     phone: zod_1.z.string().nonempty({ message: "Phone number is required" }),
     address: zod_1.z.string().nonempty({ message: "Address is required" })
 });
+const loginUserValidationSchema = zod_1.z.object({
+    email: zod_1.z.string().email({ message: "Invalid email address" }),
+    password: zod_1.z.string().min(1, { message: "Password is required" }),
+});
 exports.userValidation = {
-    userValidationSchema
+    userValidationSchema,
+    loginUserValidationSchema
 };

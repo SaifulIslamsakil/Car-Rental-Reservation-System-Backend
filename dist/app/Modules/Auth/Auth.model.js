@@ -31,7 +31,7 @@ const UserSchema = new mongoose_1.Schema({
         enum: ["user", "admin"]
     },
     password: {
-        type: String
+        type: String,
     },
     phone: {
         type: String,
@@ -56,4 +56,12 @@ UserSchema.post("save", function (doc, next) {
     this.password = "",
         next();
 });
+UserSchema.pre("find", function () {
+    console.log(this.find());
+});
+UserSchema.statics.isPasswordMatched = function (plainTextPassword, hashedPassword) {
+    return __awaiter(this, void 0, void 0, function* () {
+        return yield bcrypt_1.default.compare(plainTextPassword, hashedPassword);
+    });
+};
 exports.UserModel = (0, mongoose_1.model)("user", UserSchema);

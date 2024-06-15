@@ -1,9 +1,9 @@
 import { Schema, model } from "mongoose";
-import { TUser } from "./Auth.interface";
+import { TUser, User, } from "./Auth.interface";
 import bcrypt from 'bcrypt';
 import { Confiqe } from "../../Confiqe";
 
-const UserSchema = new Schema<TUser>({
+const UserSchema = new Schema<TUser, User>({
     name: {
         type: String,
         required: true
@@ -18,7 +18,7 @@ const UserSchema = new Schema<TUser>({
         enum: ["user", "admin"]
     },
     password: {
-        type: String
+        type: String,
     },
     phone: {
         type: String,
@@ -34,18 +34,29 @@ const UserSchema = new Schema<TUser>({
 
 
 UserSchema.pre("save", async function (next) {
-  const user = this; // doc
-  // hashing password and save into DB
-  user.password = await bcrypt.hash(
-    user.password,
-    Number(Confiqe.Salt_Rounds),
-  );
-  next()
-})
-
-UserSchema.post("save", function(doc, next){
-    this.password = "",
+    const user = this; // doc
+    // hashing password and save into DB
+    user.password = await bcrypt.hash(
+        user.password,
+        Number(Confiqe.Salt_Rounds),
+    );
     next()
 })
 
-export const UserModel = model<TUser>("user", UserSchema)
+UserSchema.post("save", function (doc, next) {
+    this.password = "",
+        next()
+})
+ 
+
+UserSchema.pre("find", function(){
+    console.log(this.find())
+})
+
+UserSchema.statics.isPasswordMatched = async function (
+    plainTextPassword,
+    hashedPassword,
+) {
+    return await bcrypt.compare(plainTextPassword, hashedPassword)
+};
+export const UserModel = model<TUser, User>("user", UserSchema)
