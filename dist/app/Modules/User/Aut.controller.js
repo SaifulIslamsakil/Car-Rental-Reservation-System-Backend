@@ -24,13 +24,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserController = void 0;
-const User_service_1 = require("./User.service");
+const Auth_service_1 = require("./Auth.service");
 const http_status_1 = __importDefault(require("http-status"));
 const catchAsync_1 = __importDefault(require("../../Utiles/catchAsync"));
 const Confiqe_1 = require("../../Confiqe");
 const createUser = (0, catchAsync_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const body = req.body;
-    const result = yield User_service_1.UserService.createUserIntoDB(body);
+    const result = yield Auth_service_1.UserService.createUserIntoDB(body);
     res.status(http_status_1.default.OK).json({
         success: true,
         messges: "user is created successfully",
@@ -38,7 +38,7 @@ const createUser = (0, catchAsync_1.default)((req, res, next) => __awaiter(void 
     });
 }));
 const loginUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield User_service_1.UserService.loginUser(req === null || req === void 0 ? void 0 : req.body);
+    const result = yield Auth_service_1.UserService.loginUser(req === null || req === void 0 ? void 0 : req.body);
     const { refareshToken } = result, responseData = __rest(result, ["refareshToken"]);
     res.cookie('refreshToken', refareshToken, {
         secure: Confiqe_1.Confiqe.Node_Env === "production",
@@ -51,7 +51,7 @@ const loginUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void
     });
 }));
 const getAllUser = (0, catchAsync_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield User_service_1.UserService.getAllUserFormDB();
+    const result = yield Auth_service_1.UserService.getAllUserFormDB();
     res.status(http_status_1.default.OK).json({
         success: true,
         messges: "all user is resivied successfully",
@@ -60,7 +60,7 @@ const getAllUser = (0, catchAsync_1.default)((req, res, next) => __awaiter(void 
 }));
 const getSingelUser = (0, catchAsync_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const { userId } = req.params;
-    const result = yield User_service_1.UserService.getSingelUserFormDB(userId);
+    const result = yield Auth_service_1.UserService.getSingelUserFormDB(userId);
     res.status(http_status_1.default.OK).json({
         success: true,
         messges: "singel user is resivied successfully",
@@ -69,7 +69,7 @@ const getSingelUser = (0, catchAsync_1.default)((req, res, next) => __awaiter(vo
 }));
 const deletedUser = (0, catchAsync_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const { userId } = req.params;
-    const result = yield User_service_1.UserService.deletedUserFormDb(userId);
+    const result = yield Auth_service_1.UserService.deletedUserFormDb(userId);
     res.status(http_status_1.default.OK).json({
         success: true,
         messges: "user is deleted successfully",
@@ -79,7 +79,7 @@ const deletedUser = (0, catchAsync_1.default)((req, res, next) => __awaiter(void
 const updatedUser = (0, catchAsync_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const { userId } = req.params;
     const body = req.body;
-    const result = yield User_service_1.UserService.updateUserIntoDB(userId, body);
+    const result = yield Auth_service_1.UserService.updateUserIntoDB(userId, body);
     res.status(http_status_1.default.OK).json({
         success: true,
         messges: "user is deleted successfully",
@@ -88,7 +88,7 @@ const updatedUser = (0, catchAsync_1.default)((req, res, next) => __awaiter(void
 }));
 const refreshToken = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { refreshToken } = req.cookies;
-    // const result = await AuthServices.refreshToken(refreshToken);
+    const result = yield AuthServices.refreshToken(refreshToken);
     console.log(refreshToken);
 }));
 exports.UserController = {

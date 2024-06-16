@@ -18,11 +18,10 @@ const http_status_1 = __importDefault(require("http-status"));
 const createCar = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const body = req.body;
-        console.log(body);
         const result = yield Car_service_1.CarService.createCarIntoDB(body);
         res.status(http_status_1.default.OK).json({
             success: true,
-            messeage: "car is created successfully",
+            messeage: "Car created successfully",
             data: result
         });
     }
@@ -35,7 +34,7 @@ const getAllCar = (req, res, next) => __awaiter(void 0, void 0, void 0, function
         const result = yield Car_service_1.CarService.getAllCarFormDB();
         res.status(http_status_1.default.OK).json({
             success: true,
-            messeage: "all car is resevied successfully",
+            messeage: "Cars retrieved successfully",
             data: result
         });
     }
@@ -49,7 +48,7 @@ const getSingelCar = (req, res, next) => __awaiter(void 0, void 0, void 0, funct
         const result = yield Car_service_1.CarService.getSingelCarFormDB(carId);
         res.status(http_status_1.default.OK).json({
             success: true,
-            messeage: "singel car is resivied successfully",
+            messeage: "A Car retrieved successfully",
             data: result
         });
     }
@@ -63,7 +62,7 @@ const deleteCar = (req, res, next) => __awaiter(void 0, void 0, void 0, function
         const result = yield Car_service_1.CarService.deleteCarFormDB(carId);
         res.status(http_status_1.default.OK).json({
             success: true,
-            messeage: "car is deleted successfully",
+            messeage: "Car  deleted successfully",
             data: result
         });
     }
@@ -78,7 +77,7 @@ const updateCar = (req, res, next) => __awaiter(void 0, void 0, void 0, function
         const result = yield Car_service_1.CarService.updateCarIntoDB(carId, body);
         res.status(http_status_1.default.OK).json({
             success: true,
-            messeage: "car is updated successfully",
+            messeage: "Car updated successfully",
             data: result
         });
     }

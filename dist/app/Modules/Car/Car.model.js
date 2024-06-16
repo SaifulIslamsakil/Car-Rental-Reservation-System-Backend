@@ -5,7 +5,8 @@ const mongoose_1 = require("mongoose");
 const CarSchema = new mongoose_1.Schema({
     name: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     description: {
         type: String,
@@ -34,5 +35,11 @@ const CarSchema = new mongoose_1.Schema({
     }
 }, {
     timestamps: true
+});
+CarSchema.pre("find", function () {
+    this.find({ isDeleted: { $ne: true } });
+});
+CarSchema.pre("findOne", function () {
+    this.find({ isDeleted: { $ne: true } });
 });
 exports.CarModel = (0, mongoose_1.model)("Car", CarSchema);

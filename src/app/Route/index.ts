@@ -1,7 +1,8 @@
 import express from "express"
-import { UserRoute } from "../Modules/Auth/Auth.route";
 import { CarRoute } from "../Modules/Car/Car.route";
 import { CarBookingRoute } from "../Modules/CarBooking/CarBooking.route";
+import { UserRoute } from "../Modules/User/User.route";
+
 
 const Router = express.Router()
 
@@ -12,7 +13,7 @@ const moduleRoute = [
         Route: UserRoute
     },
     {
-        path: "/car",
+        path: "/cars",
         Route: CarRoute
     },
     {

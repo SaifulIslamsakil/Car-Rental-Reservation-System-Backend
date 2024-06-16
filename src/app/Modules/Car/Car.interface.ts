@@ -1,5 +1,4 @@
 
-
 export type TCar = {
     name:string;
     description:string;

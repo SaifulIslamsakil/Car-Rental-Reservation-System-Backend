@@ -1,3 +1,5 @@
+import httpStatus from "http-status";
+import AppError from "../../Errors/AppError";
 import { TCar } from "./Car.interface";
 import { CarModel } from "./Car.model";
 
@@ -13,6 +15,9 @@ const getAllCarFormDB = async () => {
 
 const getSingelCarFormDB = async (id: string) => {
     const result = await CarModel.findById(id)
+    if(!result){
+        throw new AppError(httpStatus.BAD_REQUEST, "car is not exists")
+    }
     return result
 }
 const deleteCarFormDB = async (id: string) => {
@@ -23,8 +28,14 @@ const deleteCarFormDB = async (id: string) => {
     })
     return result
 }
-const updateCarIntoDB = async (id: string, payload: TCar) => {
-    console.log(id, payload)
+const updateCarIntoDB = async (id: string, payload: Partial<TCar>) => {
+    const update = await CarModel.findByIdAndUpdate(id, payload, {
+        new:true,
+        runValidators:true
+    })
+
+    return update
+
 } 
 
 export const CarService = {

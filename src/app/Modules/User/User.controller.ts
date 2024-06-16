@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { UserService } from "./Auth.service";
+import { UserService } from "./User.service";
 import httpStatus from "http-status";
 import catchAsync from "../../Utiles/catchAsync";
 import { Confiqe } from "../../Confiqe";
@@ -74,6 +74,12 @@ const updatedUser = catchAsync(async (req: Request, res: Response, next: NextFun
 
 })
 
+const refreshToken = catchAsync(async (req, res) => {
+    const { refreshToken } = req.cookies;
+    // const result = await AuthServices.refreshToken(refreshToken);
+    console.log(refreshToken)
+  });
+
 
 export const UserController = {
     createUser,
@@ -81,5 +87,6 @@ export const UserController = {
     getSingelUser,
     deletedUser,
     updatedUser,
-    loginUser
+    loginUser,
+    refreshToken
 }

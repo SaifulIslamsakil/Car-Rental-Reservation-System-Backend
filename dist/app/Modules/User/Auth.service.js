@@ -12,20 +12,24 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AuthServices = void 0;
+exports.UserService = void 0;
 const http_status_1 = __importDefault(require("http-status"));
-const Confiqe_1 = require("../../Confiqe");
-const User_model_1 = require("../User/User.model");
-const User_utils_1 = require("../User/User.utils");
 const AppError_1 = __importDefault(require("../../Errors/AppError"));
+const Auth_model_1 = require("./Auth.model");
+const Confiqe_1 = require("../../Confiqe");
+const User_utils_1 = require("./User.utils");
+const createUserIntoDB = (payload) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield Auth_model_1.UserModel.create(payload);
+    return result;
+});
 const loginUser = (payload) => __awaiter(void 0, void 0, void 0, function* () {
-    const user = yield User_model_1.UserModel.findOne({
+    const user = yield Auth_model_1.UserModel.findOne({
         email: payload === null || payload === void 0 ? void 0 : payload.email
     });
     if (!user) {
         throw new AppError_1.default(http_status_1.default.BAD_REQUEST, "This user is not found !");
     }
-    const passwordMatched = yield User_model_1.UserModel.isPasswordMatched(payload === null || payload === void 0 ? void 0 : payload.password, user === null || user === void 0 ? void 0 : user.password);
+    const passwordMatched = yield Auth_model_1.UserModel.isPasswordMatched(payload === null || payload === void 0 ? void 0 : payload.password, user === null || user === void 0 ? void 0 : user.password);
     if (!passwordMatched) {
         throw new AppError_1.default(http_status_1.default.FORBIDDEN, "Password do not matched");
     }
@@ -41,6 +45,32 @@ const loginUser = (payload) => __awaiter(void 0, void 0, void 0, function* () {
         refareshToken
     };
 });
-exports.AuthServices = {
+const getAllUserFormDB = () => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield Auth_model_1.UserModel.find();
+    return result;
+});
+const getSingelUserFormDB = (id) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield Auth_model_1.UserModel.findById(id);
+    // if (!result) {
+    //     throw new Error("user in not exsist")
+    // }
+    return result;
+});
+const deletedUserFormDb = (id) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield Auth_model_1.UserModel.findByIdAndDelete(id);
+    if (!result) {
+        throw new Error("user in not exsist");
+    }
+    return result;
+});
+const updateUserIntoDB = (id, payload) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log(id, payload);
+});
+exports.UserService = {
+    createUserIntoDB,
+    getAllUserFormDB,
+    getSingelUserFormDB,
+    deletedUserFormDb,
+    updateUserIntoDB,
     loginUser
 };

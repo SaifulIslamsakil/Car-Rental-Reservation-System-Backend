@@ -2,10 +2,12 @@ import { Schema, model } from "mongoose";
 import { TCar } from "./Car.interface";
 
 
+
 const CarSchema = new Schema<TCar>({
     name: {
         type: String,
-        required: true
+        required: true,
+        unique:true
     },
     description: {
         type: String,
@@ -37,6 +39,13 @@ const CarSchema = new Schema<TCar>({
     timestamps:true
 }
 )
+
+CarSchema.pre("find", function(){
+    this.find({isDeleted : {$ne : true}})
+})
+CarSchema.pre("findOne", function(){
+    this.find({isDeleted : {$ne : true}})
+})
 
 
 export const CarModel = model<TCar>("Car", CarSchema)

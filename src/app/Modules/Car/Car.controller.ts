@@ -6,11 +6,10 @@ const createCar = async (req: Request, res: Response, next: NextFunction
 ) => {
     try {
         const body = req.body
-        console.log(body)
         const result = await CarService.createCarIntoDB(body)
         res.status(httpStatus.OK).json({
             success: true,
-            messeage: "car is created successfully",
+            messeage: "Car created successfully",
             data: result
         })
     } catch (error) {
@@ -23,7 +22,7 @@ const getAllCar = async (req: Request, res: Response, next: NextFunction
         const result = await CarService.getAllCarFormDB()
         res.status(httpStatus.OK).json({
             success: true,
-            messeage: "all car is resevied successfully",
+            messeage: "Cars retrieved successfully",
             data: result
         })
     } catch (error) {
@@ -37,7 +36,7 @@ const getSingelCar = async (req: Request, res: Response, next: NextFunction
         const result = await CarService.getSingelCarFormDB(carId)
         res.status(httpStatus.OK).json({
             success: true,
-            messeage: "singel car is resivied successfully",
+            messeage: "A Car retrieved successfully",
             data: result
         })
     } catch (error) {
@@ -51,7 +50,7 @@ const deleteCar = async (req: Request, res: Response, next: NextFunction
         const result = await CarService.deleteCarFormDB(carId)
         res.status(httpStatus.OK).json({
             success: true,
-            messeage: "car is deleted successfully",
+            messeage: "Car  deleted successfully",
             data: result
         })
     } catch (error) {
@@ -66,7 +65,7 @@ const updateCar = async (req: Request, res: Response, next: NextFunction
         const result = await CarService.updateCarIntoDB(carId, body)
         res.status(httpStatus.OK).json({
             success: true,
-            messeage: "car is updated successfully",
+            messeage: "Car updated successfully",
             data: result
         })
     } catch (error) {

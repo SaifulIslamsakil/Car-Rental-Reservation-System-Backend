@@ -10,8 +10,19 @@ const carValidationSchema = z.object({
     pricePerHour: z.number(),
     isDeleted: z.boolean().optional()
   });
+const updatecarValidationSchema = z.object({
+    name: z.string().optional(),
+    description: z.string().optional(),
+    color: z.string().optional(),
+    isElectric: z.boolean().optional(),
+    status: z.enum(["available", "not available"]).optional(),
+    features: z.array(z.string()).optional(),
+    pricePerHour: z.number().optional(),
+    isDeleted: z.boolean().optional()
+  });
 
 
   export const CarValidations = {
-    carValidationSchema
+    carValidationSchema,
+    updatecarValidationSchema
   }
