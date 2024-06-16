@@ -6,7 +6,7 @@ const CarBookingSchema = new mongoose.Schema({
         required: true,
     },
     user: {
-        type: Schema.Types.ObjectId,
+        type: String,
         ref: ' User',
         required: true,
     },
@@ -14,6 +14,7 @@ const CarBookingSchema = new mongoose.Schema({
         type: Schema.Types.ObjectId,
         ref: 'Car',
         required: true,
+        unique:true
     },
     startTime: {
         type: String,
@@ -21,7 +22,7 @@ const CarBookingSchema = new mongoose.Schema({
     },
     endTime: {
         type: String,
-        required: true
+        default:null
     },
     totalCost: {
         type: Number,

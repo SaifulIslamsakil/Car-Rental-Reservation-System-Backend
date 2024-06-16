@@ -7,7 +7,7 @@ exports.CarBookingRoute = void 0;
 const express_1 = __importDefault(require("express"));
 const CarBooking_controller_1 = require("./CarBooking.controller");
 const route = express_1.default.Router();
-route.post("/create-car-booking", CarBooking_controller_1.CarBookingControllers.createCarBooking);
+route.post("/", CarBooking_controller_1.CarBookingControllers.createCarBooking);
 route.get("/", CarBooking_controller_1.CarBookingControllers.getAllCarBooking);
 route.get("/:carBookingId", CarBooking_controller_1.CarBookingControllers.getSingelCarBooking);
 route.delete("/:carBookingId", CarBooking_controller_1.CarBookingControllers.deleteCarBooking);

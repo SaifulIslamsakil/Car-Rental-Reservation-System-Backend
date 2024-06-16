@@ -18,7 +18,7 @@ const moduleRoute = [
         Route: Car_route_1.CarRoute
     },
     {
-        path: "/car-booking",
+        path: "/bookings",
         Route: CarBooking_route_1.CarBookingRoute
     },
 ];
