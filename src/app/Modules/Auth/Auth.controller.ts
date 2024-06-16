@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { UserService } from "./Auth.service";
 import httpStatus from "http-status";
 import catchAsync from "../../Utiles/catchAsync";
+import { Confiqe } from "../../Confiqe";
 
 const createUser = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
     const body = req.body
@@ -16,10 +17,16 @@ const createUser = catchAsync(async (req: Request, res: Response, next: NextFunc
 
 const loginUser = catchAsync(async (req: Request, res: Response) => {
     const result = await UserService.loginUser(req?.body)
+    const { refareshToken, ...responseData } = result
+    res.cookie('refreshToken', refareshToken, {
+        secure: Confiqe.Node_Env === "production",
+        httpOnly: true
+    })
+
     res.status(httpStatus.OK).json({
         success: true,
-        messges: "user is created successfully",
-        data: result
+        messges:  'User is logged in succesfully!',
+        data: responseData
     })
 })
 

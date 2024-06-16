@@ -2,10 +2,8 @@ import httpStatus from "http-status";
 import AppError from "../../Errors/AppError";
 import { TLoginUser, TUser } from "./Auth.interface";
 import { UserModel } from "./Auth.model";
-import jwt from 'jsonwebtoken';
 import { Confiqe } from "../../Confiqe";
 import { createToken } from "./Auth.utils";
-
 
 
 const createUserIntoDB = async (payload: TUser) => {
@@ -48,7 +46,8 @@ const loginUser = async (payload: TLoginUser) => {
 
     return {
         user,
-        token: accressToken
+        token: accressToken,
+        refareshToken
     }
 
 }
