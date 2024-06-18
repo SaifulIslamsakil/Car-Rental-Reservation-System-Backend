@@ -14,7 +14,6 @@ const CarBookingSchema = new mongoose.Schema({
         type: Schema.Types.ObjectId,
         ref: 'Car',
         required: true,
-        unique:true
     },
     startTime: {
         type: String,

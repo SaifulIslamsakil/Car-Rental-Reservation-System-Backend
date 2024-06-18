@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CarController = void 0;
 const Car_service_1 = require("./Car.service");
 const http_status_1 = __importDefault(require("http-status"));
+const catchAsync_1 = __importDefault(require("../../Utiles/catchAsync"));
 const createCar = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const body = req.body;
@@ -70,25 +71,30 @@ const deleteCar = (req, res, next) => __awaiter(void 0, void 0, void 0, function
         next(error);
     }
 });
-const updateCar = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const body = req.body;
-        const { carId } = req.params;
-        const result = yield Car_service_1.CarService.updateCarIntoDB(carId, body);
+const returnAndUpdate = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const path = (req === null || req === void 0 ? void 0 : req.path) === "/return";
+    if (path) {
+        const result = yield Car_service_1.CarService.carReturn(req === null || req === void 0 ? void 0 : req.body);
+        res.status(http_status_1.default.OK).json({
+            success: true,
+            messeage: "Car returned successfully",
+            data: result
+        });
+    }
+    else {
+        const { carId } = req === null || req === void 0 ? void 0 : req.params;
+        const result = yield Car_service_1.CarService.updateCarIntoDB(carId, req === null || req === void 0 ? void 0 : req.body);
         res.status(http_status_1.default.OK).json({
             success: true,
             messeage: "Car updated successfully",
             data: result
         });
     }
-    catch (error) {
-        next(error);
-    }
-});
+}));
 exports.CarController = {
     createCar,
     getSingelCar,
     getAllCar,
     deleteCar,
-    updateCar
+    returnAndUpdate
 };

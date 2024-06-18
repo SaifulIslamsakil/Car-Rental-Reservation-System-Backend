@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { CarService } from "./Car.service";
 import httpStatus from "http-status";
+import catchAsync from "../../Utiles/catchAsync";
 
 const createCar = async (req: Request, res: Response, next: NextFunction
 ) => {
@@ -32,7 +33,7 @@ const getAllCar = async (req: Request, res: Response, next: NextFunction
 const getSingelCar = async (req: Request, res: Response, next: NextFunction
 ) => {
     try {
-        const {carId} = req.params
+        const { carId } = req.params
         const result = await CarService.getSingelCarFormDB(carId)
         res.status(httpStatus.OK).json({
             success: true,
@@ -46,7 +47,7 @@ const getSingelCar = async (req: Request, res: Response, next: NextFunction
 const deleteCar = async (req: Request, res: Response, next: NextFunction
 ) => {
     try {
-        const {carId} = req.params
+        const { carId } = req.params
         const result = await CarService.deleteCarFormDB(carId)
         res.status(httpStatus.OK).json({
             success: true,
@@ -57,27 +58,36 @@ const deleteCar = async (req: Request, res: Response, next: NextFunction
         next(error)
     }
 }
-const updateCar = async (req: Request, res: Response, next: NextFunction
-) => {
-    try {
-        const body = req.body
-        const {carId} = req.params
-        const result = await CarService.updateCarIntoDB(carId, body)
+
+
+
+const returnAndUpdate = catchAsync(async (req: Request, res: Response) => {
+    const path = req?.path === "/return"
+    if (path) {
+        const result = await CarService.carReturn(req?.body)
+        res.status(httpStatus.OK).json({
+            success: true,
+            messeage: "Car returned successfully",
+            data: result
+        })
+    }
+    else {
+        const { carId } = req?.params
+        const result = await CarService.updateCarIntoDB(carId, req?.body)
         res.status(httpStatus.OK).json({
             success: true,
             messeage: "Car updated successfully",
             data: result
         })
-    } catch (error) {
-        next(error)
     }
-}
+
+})
 
 
-export const  CarController = {
+export const CarController = {
     createCar,
     getSingelCar,
     getAllCar,
     deleteCar,
-    updateCar
+    returnAndUpdate
 }

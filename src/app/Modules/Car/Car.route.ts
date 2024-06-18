@@ -1,7 +1,7 @@
 import express from "express"
-import { CarController } from "./Car.controller"
 import ValidationRequest from "../../Midleware/ValidationRequest"
 import { CarValidations } from "./Car.validation"
+import { CarController } from "./Car.controller"
 
 const route = express.Router()
 
@@ -9,7 +9,8 @@ route.post("/", ValidationRequest(CarValidations.carValidationSchema), CarContro
 route.get("/", CarController.getAllCar)
 route.get("/:carId", CarController.getSingelCar)
 route.delete("/:carId", CarController.deleteCar)
-route.put("/:carId", ValidationRequest(CarValidations.updatecarValidationSchema), CarController.updateCar)
+route.put("/:carId", ValidationRequest(CarValidations.updatecarValidationSchema), CarController.returnAndUpdate)
+route.put("/return",CarController.returnAndUpdate)
 
 
 export const CarRoute = route

@@ -2,6 +2,7 @@ import express from "express"
 import { CarRoute } from "../Modules/Car/Car.route";
 import { CarBookingRoute } from "../Modules/CarBooking/CarBooking.route";
 import { UserRoute } from "../Modules/User/User.route";
+import { CarReturnRoute } from "../Modules/CarReturn/CarReturn.route";
 
 
 const Router = express.Router()

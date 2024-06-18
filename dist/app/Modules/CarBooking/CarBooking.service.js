@@ -42,20 +42,7 @@ const getAllCarBookingFormDB = () => __awaiter(void 0, void 0, void 0, function*
     const result = yield CarBooking_model_1.CarBookingModel.find();
     return result;
 });
-const getSingelCarBookingFormDB = (CarBookingId) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield CarBooking_model_1.CarBookingModel.findById(CarBookingId);
-    return result;
-});
-const deleteCarBookingFormDB = (CarBookingId) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log(CarBookingId);
-});
-const updateCarBookingFormDB = (CarBookingId, payload) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log(CarBookingId, payload);
-});
 exports.CarBookingService = {
     createCarBookingIntoDB,
-    getAllCarBookingFormDB,
-    getSingelCarBookingFormDB,
-    deleteCarBookingFormDB,
-    updateCarBookingFormDB
+    getAllCarBookingFormDB
 };

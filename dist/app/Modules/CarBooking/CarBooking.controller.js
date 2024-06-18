@@ -41,52 +41,7 @@ const getAllCarBooking = (req, res, next) => __awaiter(void 0, void 0, void 0, f
         next(error);
     }
 });
-const getSingelCarBooking = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const { CarBookingId } = req === null || req === void 0 ? void 0 : req.params;
-        const result = yield CarBooking_service_1.CarBookingService.getSingelCarBookingFormDB(CarBookingId);
-        res.status(http_status_1.default.OK).json({
-            success: true,
-            message: "singel car booking in created successfully",
-            data: result
-        });
-    }
-    catch (error) {
-        next(error);
-    }
-});
-const deleteCarBooking = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const { CarBookingId } = req === null || req === void 0 ? void 0 : req.params;
-        const result = yield CarBooking_service_1.CarBookingService.deleteCarBookingFormDB(CarBookingId);
-        res.status(http_status_1.default.OK).json({
-            success: true,
-            message: "car booking is deleted successfully",
-            data: result
-        });
-    }
-    catch (error) {
-        next(error);
-    }
-});
-const updateCarBooking = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const { CarBookingId } = req === null || req === void 0 ? void 0 : req.params;
-        const result = yield CarBooking_service_1.CarBookingService.updateCarBookingFormDB(CarBookingId, req === null || req === void 0 ? void 0 : req.body);
-        res.status(http_status_1.default.OK).json({
-            success: true,
-            message: "car booking in update successfully",
-            data: result
-        });
-    }
-    catch (error) {
-        next(error);
-    }
-});
 exports.CarBookingControllers = {
     createCarBooking,
     getAllCarBooking,
-    getSingelCarBooking,
-    deleteCarBooking,
-    updateCarBooking
 };

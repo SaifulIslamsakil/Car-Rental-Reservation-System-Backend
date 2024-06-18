@@ -5,10 +5,7 @@ import { CarBookingControllers } from './CarBooking.controller'
 const route = express.Router()
 
 route.post("/", CarBookingControllers.createCarBooking)
-route.get("/", CarBookingControllers.getAllCarBooking)
-route.get("/:carBookingId", CarBookingControllers.getSingelCarBooking)
-route.delete("/:carBookingId", CarBookingControllers.deleteCarBooking)
-route.patch("/:carBookingId", CarBookingControllers.updateCarBooking)
+route.get("/my-bookings", CarBookingControllers.getAllCarBooking)
 
 
 export const CarBookingRoute = route
