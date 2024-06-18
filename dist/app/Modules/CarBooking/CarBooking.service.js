@@ -19,7 +19,7 @@ const Car_model_1 = require("../Car/Car.model");
 const CarBooking_model_1 = require("./CarBooking.model");
 const createCarBookingIntoDB = (payload) => __awaiter(void 0, void 0, void 0, function* () {
     payload.user = "666b0c2ffaaf672c6d918404";
-    const carId = payload === null || payload === void 0 ? void 0 : payload.car;
+    const { carId } = payload;
     const carData = yield Car_model_1.CarModel.findById(carId);
     if (!carData) {
         throw new AppError_1.default(http_status_1.default.BAD_REQUEST, "car is not exists");

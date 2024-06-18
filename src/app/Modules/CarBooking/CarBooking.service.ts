@@ -6,8 +6,9 @@ import { CarBookingModel } from "./CarBooking.model";
 
 const createCarBookingIntoDB = async(payload:TCarBooking)=>{
     payload.user = "666b0c2ffaaf672c6d918404"
-    const carId = payload?.car
+    const {carId} = payload
     const carData = await CarModel.findById(carId)
+
     if(!carData){
         throw new AppError(httpStatus.BAD_REQUEST, "car is not exists")
     }

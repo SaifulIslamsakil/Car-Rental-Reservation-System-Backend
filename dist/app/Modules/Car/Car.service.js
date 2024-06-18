@@ -27,25 +27,31 @@ const getAllCarFormDB = () => __awaiter(void 0, void 0, void 0, function* () {
     return result;
 });
 const getSingelCarFormDB = (id) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield Car_model_1.CarModel.findById(id);
-    if (!result) {
+    const findCar = yield Car_model_1.CarModel.findById(id);
+    if (!findCar) {
         throw new AppError_1.default(http_status_1.default.BAD_REQUEST, "car is not exists");
     }
-    return result;
+    return findCar;
 });
 const deleteCarFormDB = (id) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield Car_model_1.CarModel.findByIdAndUpdate(id, {
+    const deleteCar = yield Car_model_1.CarModel.findByIdAndUpdate(id, {
         isDeleted: true
     }, {
         new: true
     });
-    return result;
+    if (!deleteCar) {
+        throw new AppError_1.default(http_status_1.default.BAD_REQUEST, "car is not exists");
+    }
+    return deleteCar;
 });
 const updateCarIntoDB = (id, payload) => __awaiter(void 0, void 0, void 0, function* () {
     const carUpdate = yield Car_model_1.CarModel.findByIdAndUpdate(id, payload, {
         new: true,
         runValidators: true
     });
+    if (!carUpdate) {
+        throw new AppError_1.default(http_status_1.default.BAD_REQUEST, "car is not exists");
+    }
     return carUpdate;
 });
 const carReturn = (payload) => __awaiter(void 0, void 0, void 0, function* () {
@@ -54,7 +60,7 @@ const carReturn = (payload) => __awaiter(void 0, void 0, void 0, function* () {
     if (!carBookingData) {
         throw new AppError_1.default(http_status_1.default.NOT_FOUND, "car booking is not found");
     }
-    const CarData = yield Car_model_1.CarModel.findById(carBookingData === null || carBookingData === void 0 ? void 0 : carBookingData.car);
+    const CarData = yield Car_model_1.CarModel.findById(carBookingData === null || carBookingData === void 0 ? void 0 : carBookingData.carId);
     if (!CarData || CarData.status === "available") {
         throw new AppError_1.default(http_status_1.default.NOT_FOUND, "car booking is not found");
     }
@@ -80,7 +86,7 @@ const carReturn = (payload) => __awaiter(void 0, void 0, void 0, function* () {
     if (!updateCarBookingData) {
         throw new AppError_1.default(http_status_1.default.BAD_REQUEST, " your booking car is not updated");
     }
-    const updateCar = yield Car_model_1.CarModel.findByIdAndUpdate(carBookingData.car, {
+    const updateCar = yield Car_model_1.CarModel.findByIdAndUpdate(carBookingData.carId, {
         status: "available"
     }, {
         new: true

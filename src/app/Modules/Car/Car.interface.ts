@@ -1,3 +1,4 @@
+import { Schema } from "mongoose";
 
 export type TCar = {
     name:string;
@@ -9,3 +10,12 @@ export type TCar = {
     pricePerHour:number;
     isDeleted?:boolean
 }
+
+
+
+export type TCarReturn = {
+    bookingId : Schema.Types.ObjectId;
+    endTime: string
+}
+
+

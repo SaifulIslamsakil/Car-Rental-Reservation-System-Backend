@@ -45,32 +45,7 @@ const loginUser = (payload) => __awaiter(void 0, void 0, void 0, function* () {
         refareshToken
     };
 });
-const getAllUserFormDB = () => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield User_model_1.UserModel.find();
-    return result;
-});
-const getSingelUserFormDB = (id) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield User_model_1.UserModel.findById(id);
-    // if (!result) {
-    //     throw new Error("user in not exsist")
-    // }
-    return result;
-});
-const deletedUserFormDb = (id) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield User_model_1.UserModel.findByIdAndDelete(id);
-    if (!result) {
-        throw new Error("user in not exsist");
-    }
-    return result;
-});
-const updateUserIntoDB = (id, payload) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log(id, payload);
-});
 exports.UserService = {
     createUserIntoDB,
-    getAllUserFormDB,
-    getSingelUserFormDB,
-    deletedUserFormDb,
-    updateUserIntoDB,
     loginUser
 };

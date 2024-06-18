@@ -7,7 +7,6 @@ const carValidationSchema = zod_1.z.object({
     description: zod_1.z.string(),
     color: zod_1.z.string(),
     isElectric: zod_1.z.boolean(),
-    status: zod_1.z.enum(["available", "not available"]),
     features: zod_1.z.array(zod_1.z.string()),
     pricePerHour: zod_1.z.number(),
     isDeleted: zod_1.z.boolean().optional()
@@ -22,7 +21,12 @@ const updatecarValidationSchema = zod_1.z.object({
     pricePerHour: zod_1.z.number().optional(),
     isDeleted: zod_1.z.boolean().optional()
 });
+const CarReturnValidationSchema = zod_1.z.object({
+    bookingId: zod_1.z.string(),
+    endTime: zod_1.z.string()
+});
 exports.CarValidations = {
     carValidationSchema,
-    updatecarValidationSchema
+    updatecarValidationSchema,
+    CarReturnValidationSchema
 };

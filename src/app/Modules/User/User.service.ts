@@ -51,35 +51,9 @@ const loginUser = async (payload: TLoginUser) => {
     }
 
 }
-const getAllUserFormDB = async () => {
-    const result = await UserModel.find()
-    return result
-}
 
-const getSingelUserFormDB = async (id: string) => {
-    const result = await UserModel.findById(id)
-    // if (!result) {
-    //     throw new Error("user in not exsist")
-    // }
-    return result
-}
-
-const deletedUserFormDb = async (id: string) => {
-    const result = await UserModel.findByIdAndDelete(id)
-    if (!result) {
-        throw new Error("user in not exsist")
-    }
-    return result
-}
-const updateUserIntoDB = async (id: string, payload: TUser) => {
-    console.log(id, payload)
-}
 
 export const UserService = {
     createUserIntoDB,
-    getAllUserFormDB,
-    getSingelUserFormDB,
-    deletedUserFormDb,
-    updateUserIntoDB,
     loginUser
 }

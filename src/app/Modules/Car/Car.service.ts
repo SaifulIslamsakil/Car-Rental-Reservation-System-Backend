@@ -1,8 +1,7 @@
 import httpStatus from "http-status";
 import AppError from "../../Errors/AppError";
-import { TCar } from "./Car.interface";
+import { TCar, TCarReturn } from "./Car.interface";
 import { CarModel } from "./Car.model";
-import { TCarReturn } from "../CarReturn/CarReturn.interface";
 import { CarBookingModel } from "../CarBooking/CarBooking.model";
 import { convartTimeTohours } from "./Car.utils";
 
@@ -18,25 +17,31 @@ const getAllCarFormDB = async () => {
 }
 
 const getSingelCarFormDB = async (id: string) => {
-    const result = await CarModel.findById(id)
-    if (!result) {
+    const findCar = await CarModel.findById(id)
+    if (!findCar) {
         throw new AppError(httpStatus.BAD_REQUEST, "car is not exists")
     }
-    return result
+    return findCar
 }
 const deleteCarFormDB = async (id: string) => {
-    const result = await CarModel.findByIdAndUpdate(id, {
+    const deleteCar = await CarModel.findByIdAndUpdate(id, {
         isDeleted: true
     }, {
         new: true
     })
-    return result
+    if(!deleteCar){
+        throw new AppError(httpStatus.BAD_REQUEST, "car is not exists")
+    }
+    return deleteCar
 }
 const updateCarIntoDB = async (id: string, payload: Partial<TCar>) => {
     const carUpdate = await CarModel.findByIdAndUpdate(id, payload, {
         new: true,
         runValidators: true
     })
+    if(!carUpdate){
+        throw new AppError(httpStatus.BAD_REQUEST, "car is not exists")
+    }
 
     return carUpdate
 
@@ -48,7 +53,7 @@ const carReturn = async (payload: TCarReturn) => {
     if (!carBookingData) {
         throw new AppError(httpStatus.NOT_FOUND, "car booking is not found")
     }
-    const CarData = await CarModel.findById(carBookingData?.car)
+    const CarData = await CarModel.findById(carBookingData?.carId)
     if (!CarData || CarData.status === "available") {
         throw new AppError(httpStatus.NOT_FOUND, "car booking is not found")
     }
@@ -84,7 +89,7 @@ const carReturn = async (payload: TCarReturn) => {
         throw new AppError(httpStatus.BAD_REQUEST, " your booking car is not updated")
     }
 
-    const updateCar = await CarModel.findByIdAndUpdate(carBookingData.car, {
+    const updateCar = await CarModel.findByIdAndUpdate(carBookingData.carId, {
         status: "available"
     },
         {

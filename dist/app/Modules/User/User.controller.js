@@ -50,42 +50,6 @@ const loginUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void
         data: responseData
     });
 }));
-const getAllUser = (0, catchAsync_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield User_service_1.UserService.getAllUserFormDB();
-    res.status(http_status_1.default.OK).json({
-        success: true,
-        messges: "all user is resivied successfully",
-        data: result
-    });
-}));
-const getSingelUser = (0, catchAsync_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const { userId } = req.params;
-    const result = yield User_service_1.UserService.getSingelUserFormDB(userId);
-    res.status(http_status_1.default.OK).json({
-        success: true,
-        messges: "singel user is resivied successfully",
-        data: result
-    });
-}));
-const deletedUser = (0, catchAsync_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const { userId } = req.params;
-    const result = yield User_service_1.UserService.deletedUserFormDb(userId);
-    res.status(http_status_1.default.OK).json({
-        success: true,
-        messges: "user is deleted successfully",
-        data: result
-    });
-}));
-const updatedUser = (0, catchAsync_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const { userId } = req.params;
-    const body = req.body;
-    const result = yield User_service_1.UserService.updateUserIntoDB(userId, body);
-    res.status(http_status_1.default.OK).json({
-        success: true,
-        messges: "user is deleted successfully",
-        data: result
-    });
-}));
 const refreshToken = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { refreshToken } = req.cookies;
     // const result = await AuthServices.refreshToken(refreshToken);
@@ -93,10 +57,6 @@ const refreshToken = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, v
 }));
 exports.UserController = {
     createUser,
-    getAllUser,
-    getSingelUser,
-    deletedUser,
-    updatedUser,
     loginUser,
     refreshToken
 };

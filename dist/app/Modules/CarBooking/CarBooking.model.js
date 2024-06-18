@@ -35,7 +35,7 @@ const CarBookingSchema = new mongoose_1.default.Schema({
         ref: ' User',
         required: true,
     },
-    car: {
+    carId: {
         type: mongoose_1.Schema.Types.ObjectId,
         ref: 'Car',
         required: true,
