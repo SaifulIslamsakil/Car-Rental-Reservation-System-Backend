@@ -28,12 +28,14 @@ const User_service_1 = require("./User.service");
 const http_status_1 = __importDefault(require("http-status"));
 const catchAsync_1 = __importDefault(require("../../Utiles/catchAsync"));
 const Confiqe_1 = require("../../Confiqe");
+const SendResponse_1 = require("../../Utiles/SendResponse");
 const createUser = (0, catchAsync_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const body = req.body;
     const result = yield User_service_1.UserService.createUserIntoDB(body);
-    res.status(http_status_1.default.OK).json({
+    (0, SendResponse_1.sendResponse)(res, {
+        statusCode: http_status_1.default.OK,
         success: true,
-        messges: "user is created successfully",
+        message: "User registered successfully",
         data: result
     });
 }));
@@ -44,10 +46,11 @@ const loginUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void
         secure: Confiqe_1.Confiqe.Node_Env === "production",
         httpOnly: true
     });
-    res.status(http_status_1.default.OK).json({
+    (0, SendResponse_1.sendResponse)(res, {
+        statusCode: http_status_1.default.OK,
         success: true,
-        messges: 'User is logged in succesfully!',
-        data: responseData
+        message: "User is logged in succesfully!",
+        data: result
     });
 }));
 const refreshToken = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {

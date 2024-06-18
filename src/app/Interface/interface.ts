@@ -9,3 +9,10 @@ export type TGenericErrorResponse = {
     message: string,
     errorSources:TErrorSources
 }
+
+export type TResponse<T> = {
+    statusCode: number;
+    success: boolean;
+    message?: string;
+    data: T;
+};

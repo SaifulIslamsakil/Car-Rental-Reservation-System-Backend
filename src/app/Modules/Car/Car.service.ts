@@ -29,7 +29,7 @@ const deleteCarFormDB = async (id: string) => {
     }, {
         new: true
     })
-    if(!deleteCar){
+    if (!deleteCar) {
         throw new AppError(httpStatus.BAD_REQUEST, "car is not exists")
     }
     return deleteCar
@@ -39,12 +39,10 @@ const updateCarIntoDB = async (id: string, payload: Partial<TCar>) => {
         new: true,
         runValidators: true
     })
-    if(!carUpdate){
+    if (!carUpdate) {
         throw new AppError(httpStatus.BAD_REQUEST, "car is not exists")
     }
-
     return carUpdate
-
 }
 
 const carReturn = async (payload: TCarReturn) => {

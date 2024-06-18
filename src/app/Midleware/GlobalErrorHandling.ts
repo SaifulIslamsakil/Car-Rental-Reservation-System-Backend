@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { TErrorSources } from "../Interface/Error.interface";
+import { TErrorSources } from "../Interface/interface";
 import { ZodError } from "zod";
 import { Confiqe } from "../Confiqe";
 import handelZodError from "../Errors/HandelZodError";

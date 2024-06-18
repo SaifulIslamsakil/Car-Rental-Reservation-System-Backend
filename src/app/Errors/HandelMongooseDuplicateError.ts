@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { TErrorSources, TGenericErrorResponse } from "../Interface/Error.interface";
+import { TErrorSources, TGenericErrorResponse } from "../Interface/interface";
 
 const handelMongooseDuplicateError = (err: any): TGenericErrorResponse => {
     // Extract value within double quotes using regex

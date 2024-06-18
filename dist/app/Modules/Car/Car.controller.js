@@ -16,61 +16,46 @@ exports.CarController = void 0;
 const Car_service_1 = require("./Car.service");
 const http_status_1 = __importDefault(require("http-status"));
 const catchAsync_1 = __importDefault(require("../../Utiles/catchAsync"));
-const createCar = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const body = req.body;
-        const result = yield Car_service_1.CarService.createCarIntoDB(body);
-        res.status(http_status_1.default.OK).json({
-            success: true,
-            messeage: "Car created successfully",
-            data: result
-        });
-    }
-    catch (error) {
-        next(error);
-    }
-});
-const getAllCar = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const result = yield Car_service_1.CarService.getAllCarFormDB();
-        res.status(http_status_1.default.OK).json({
-            success: true,
-            messeage: "Cars retrieved successfully",
-            data: result
-        });
-    }
-    catch (error) {
-        next(error);
-    }
-});
-const getSingelCar = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const { carId } = req.params;
-        const result = yield Car_service_1.CarService.getSingelCarFormDB(carId);
-        res.status(http_status_1.default.OK).json({
-            success: true,
-            messeage: "A Car retrieved successfully",
-            data: result
-        });
-    }
-    catch (error) {
-        next(error);
-    }
-});
-const deleteCar = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const { carId } = req.params;
-        const result = yield Car_service_1.CarService.deleteCarFormDB(carId);
-        res.status(http_status_1.default.OK).json({
-            success: true,
-            messeage: "Car  deleted successfully",
-            data: result
-        });
-    }
-    catch (error) {
-        next(error);
-    }
-});
+const SendResponse_1 = require("../../Utiles/SendResponse");
+const createCar = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const body = req.body;
+    const result = yield Car_service_1.CarService.createCarIntoDB(body);
+    (0, SendResponse_1.sendResponse)(res, {
+        statusCode: http_status_1.default.OK,
+        success: true,
+        message: "Car created successfully",
+        data: result
+    });
+}));
+const getAllCar = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield Car_service_1.CarService.getAllCarFormDB();
+    (0, SendResponse_1.sendResponse)(res, {
+        statusCode: http_status_1.default.OK,
+        success: true,
+        message: "Cars retrieved successfully",
+        data: result
+    });
+}));
+const getSingelCar = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { carId } = req.params;
+    const result = yield Car_service_1.CarService.getSingelCarFormDB(carId);
+    (0, SendResponse_1.sendResponse)(res, {
+        statusCode: http_status_1.default.OK,
+        success: true,
+        message: "A Car retrieved successfully",
+        data: result
+    });
+}));
+const deleteCar = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { carId } = req.params;
+    const result = yield Car_service_1.CarService.deleteCarFormDB(carId);
+    (0, SendResponse_1.sendResponse)(res, {
+        statusCode: http_status_1.default.OK,
+        success: true,
+        message: "Car deleted successfully",
+        data: result
+    });
+}));
 const returnAndUpdate = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const path = (req === null || req === void 0 ? void 0 : req.path) === "/return";
     if (path) {

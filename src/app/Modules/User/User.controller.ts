@@ -3,14 +3,15 @@ import { UserService } from "./User.service";
 import httpStatus from "http-status";
 import catchAsync from "../../Utiles/catchAsync";
 import { Confiqe } from "../../Confiqe";
+import { sendResponse } from "../../Utiles/SendResponse";
 
 const createUser = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
     const body = req.body
     const result = await UserService.createUserIntoDB(body)
-
-    res.status(httpStatus.OK).json({
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
         success: true,
-        messges: "user is created successfully",
+        message: "User registered successfully",
         data: result
     })
 })
@@ -23,10 +24,11 @@ const loginUser = catchAsync(async (req: Request, res: Response) => {
         httpOnly: true
     })
 
-    res.status(httpStatus.OK).json({
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
         success: true,
-        messges: 'User is logged in succesfully!',
-        data: responseData
+        message: "User is logged in succesfully!",
+        data: result
     })
 })
 
