@@ -8,9 +8,11 @@ const cors_1 = __importDefault(require("cors"));
 const NotFoundRoute_1 = __importDefault(require("./app/Midleware/NotFoundRoute"));
 const GlobalErrorHandling_1 = __importDefault(require("./app/Midleware/GlobalErrorHandling"));
 const Route_1 = __importDefault(require("./app/Route"));
+const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
-app.use((0, cors_1.default)());
+app.use((0, cors_1.default)({ origin: ['http://localhost:5173'] }));
+app.use((0, cookie_parser_1.default)());
 // use Route
 app.use("/api", Route_1.default);
 app.get('/', (req, res) => {

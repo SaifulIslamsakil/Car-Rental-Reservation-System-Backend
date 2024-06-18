@@ -1,9 +1,10 @@
 import httpStatus from "http-status";
 import AppError from "../../Errors/AppError";
-import { TLoginUser, TUser } from "./User.interface";
+import { TJwtPayload, TLoginUser, TUser } from "./User.interface";
 import { UserModel } from "./User.model";
 import { Confiqe } from "../../Confiqe";
 import { createToken } from "./User.utils";
+import { ObjectId, Schema, Types } from "mongoose";
 
 
 const createUserIntoDB = async (payload: TUser) => {
@@ -25,7 +26,8 @@ const loginUser = async (payload: TLoginUser) => {
         throw new AppError(httpStatus.FORBIDDEN, "Password do not matched")
     }
 
-    const jwtPayload: { email: string, role: string } = {
+    const jwtPayload: TJwtPayload = {
+        id:user?._id,
         email: user?.email,
         role: user?.role
     }
@@ -33,7 +35,7 @@ const loginUser = async (payload: TLoginUser) => {
     const accressToken = createToken(
         jwtPayload,
         Confiqe.Access_Secret as string,
-        Confiqe.Accress_Expires as string
+        "1hr"
     )
 
     const refareshToken = createToken(

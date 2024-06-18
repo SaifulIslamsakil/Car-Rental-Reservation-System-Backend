@@ -59,4 +59,9 @@ UserSchema.statics.isPasswordMatched = async function (
 ) {
     return await bcrypt.compare(plainTextPassword, hashedPassword)
 };
+
+UserSchema.statics.isUserExists = async function(id:string){
+    return await UserModel.findOne({_id:id})
+
+}
 export const UserModel = model<TUser, User>("user", UserSchema)

@@ -1,4 +1,4 @@
-import { Model } from "mongoose";
+import { Model, Types } from "mongoose";
 import { UserModel } from "./User.model";
 
 export type TUser = {
@@ -22,4 +22,17 @@ export interface User extends Model<TUser> {
     plainTextPassword: string,
     hashedPassword: string,
   ): Promise<boolean>;
+
+  isUserExists(id: string): Promise<TUser>
 }
+export type TJwtPayload = {
+  id: Types.ObjectId;
+  email: string;
+  role: string;
+}
+export const USER_ROLE = {
+  user: "user",
+  admin: "admin"
+} as const;
+
+export type TUserRole = keyof typeof USER_ROLE 

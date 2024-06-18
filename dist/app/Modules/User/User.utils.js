@@ -6,8 +6,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.createToken = void 0;
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const createToken = (payload, screate, expiresIn) => {
-    return jsonwebtoken_1.default.sign(payload, screate, {
+    const token = jsonwebtoken_1.default.sign(payload, screate, {
         expiresIn
     });
+    return `Bearer ${token}`;
 };
 exports.createToken = createToken;

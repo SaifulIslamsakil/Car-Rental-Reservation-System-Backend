@@ -34,10 +34,11 @@ const loginUser = (payload) => __awaiter(void 0, void 0, void 0, function* () {
         throw new AppError_1.default(http_status_1.default.FORBIDDEN, "Password do not matched");
     }
     const jwtPayload = {
+        id: user === null || user === void 0 ? void 0 : user._id,
         email: user === null || user === void 0 ? void 0 : user.email,
         role: user === null || user === void 0 ? void 0 : user.role
     };
-    const accressToken = (0, User_utils_1.createToken)(jwtPayload, Confiqe_1.Confiqe.Access_Secret, Confiqe_1.Confiqe.Accress_Expires);
+    const accressToken = (0, User_utils_1.createToken)(jwtPayload, Confiqe_1.Confiqe.Access_Secret, "1hr");
     const refareshToken = (0, User_utils_1.createToken)(jwtPayload, Confiqe_1.Confiqe.Refaresh_Secret, Confiqe_1.Confiqe.Accress_Expires);
     return {
         user,
