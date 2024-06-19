@@ -29,7 +29,7 @@ const http_status_1 = __importDefault(require("http-status"));
 const catchAsync_1 = __importDefault(require("../../Utiles/catchAsync"));
 const Confiqe_1 = require("../../Confiqe");
 const SendResponse_1 = require("../../Utiles/SendResponse");
-const createUser = (0, catchAsync_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+const createUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const body = req.body;
     const result = yield User_service_1.UserService.createUserIntoDB(body);
     (0, SendResponse_1.sendResponse)(res, {
@@ -50,16 +50,10 @@ const loginUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void
         statusCode: http_status_1.default.OK,
         success: true,
         message: "User is logged in succesfully!",
-        data: result
+        data: responseData
     });
-}));
-const refreshToken = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { refreshToken } = req.cookies;
-    // const result = await AuthServices.refreshToken(refreshToken);
-    console.log(refreshToken);
 }));
 exports.UserController = {
     createUser,
     loginUser,
-    refreshToken
 };

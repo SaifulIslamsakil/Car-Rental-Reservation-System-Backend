@@ -6,5 +6,5 @@ import { TJwtPayload } from "./User.interface"
     const token = jwt.sign(payload, screate, {
         expiresIn
     })
-    return `Bearer ${token}`
+    return token
 }

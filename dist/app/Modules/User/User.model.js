@@ -46,18 +46,13 @@ const UserSchema = new mongoose_1.Schema({
 });
 UserSchema.pre("save", function (next) {
     return __awaiter(this, void 0, void 0, function* () {
-        const user = this; // doc
-        // hashing password and save into DB
-        user.password = yield bcrypt_1.default.hash(user.password, Number(Confiqe_1.Confiqe.Salt_Rounds));
+        this.password = yield bcrypt_1.default.hash(this.password, Number(Confiqe_1.Confiqe.Salt_Rounds));
         next();
     });
 });
 UserSchema.post("save", function (doc, next) {
     this.password = "",
         next();
-});
-UserSchema.pre("find", function () {
-    console.log(this.find());
 });
 UserSchema.statics.isPasswordMatched = function (plainTextPassword, hashedPassword) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -69,4 +64,4 @@ UserSchema.statics.isUserExists = function (id) {
         return yield exports.UserModel.findOne({ _id: id });
     });
 };
-exports.UserModel = (0, mongoose_1.model)("user", UserSchema);
+exports.UserModel = (0, mongoose_1.model)("User", UserSchema);

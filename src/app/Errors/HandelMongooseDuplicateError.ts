@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+
 import { TErrorSources, TGenericErrorResponse } from "../Interface/interface";
 
 const handelMongooseDuplicateError = (err: any): TGenericErrorResponse => {

@@ -7,8 +7,8 @@ import { USER_ROLE } from '../User/User.interface'
 const route = express.Router()
 
 route.post("/",auth(USER_ROLE.user), CarBookingControllers.createCarBooking)
-// route.get("/",auth(USER_ROLE.admin), CarBookingControllers.createCarBooking)
-route.get("/my-bookings", auth(USER_ROLE.admin), CarBookingControllers.getAllCarBooking)
+route.get("/",auth(USER_ROLE.admin), CarBookingControllers.getAllCarBooking)
+route.get("/my-bookings",auth(USER_ROLE.user) , CarBookingControllers.getMyAllBookings)
 
 
 export const CarBookingRoute = route

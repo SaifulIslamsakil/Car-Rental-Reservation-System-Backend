@@ -9,6 +9,6 @@ const createToken = (payload, screate, expiresIn) => {
     const token = jsonwebtoken_1.default.sign(payload, screate, {
         expiresIn
     });
-    return `Bearer ${token}`;
+    return token;
 };
 exports.createToken = createToken;

@@ -10,6 +10,6 @@ const Auth_1 = __importDefault(require("../../Midleware/Auth"));
 const User_interface_1 = require("../User/User.interface");
 const route = express_1.default.Router();
 route.post("/", (0, Auth_1.default)(User_interface_1.USER_ROLE.user), CarBooking_controller_1.CarBookingControllers.createCarBooking);
-// route.get("/",auth(USER_ROLE.admin), CarBookingControllers.createCarBooking)
-route.get("/my-bookings", (0, Auth_1.default)(User_interface_1.USER_ROLE.admin), CarBooking_controller_1.CarBookingControllers.getAllCarBooking);
+route.get("/", (0, Auth_1.default)(User_interface_1.USER_ROLE.admin), CarBooking_controller_1.CarBookingControllers.getAllCarBooking);
+route.get("/my-bookings", (0, Auth_1.default)(User_interface_1.USER_ROLE.user), CarBooking_controller_1.CarBookingControllers.getMyAllBookings);
 exports.CarBookingRoute = route;

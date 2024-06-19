@@ -1,39 +1,49 @@
-import { NextFunction, Request, Response } from "express";
+import {  Request, Response } from "express";
 import { CarBookingService } from "./CarBooking.service";
 import httpStatus from "http-status";
+import catchAsync from "../../Utiles/catchAsync";
+import { sendResponse } from "../../Utiles/SendResponse";
 
-const createCarBooking = async(req:Request, res:Response, next:NextFunction)=>{
-    try {
-        const result = await CarBookingService.createCarBookingIntoDB(req?.body)
+const createCarBooking = catchAsync( async(req:Request, res:Response)=>{
 
-        res.status(httpStatus.OK).json({
-            success : true,
-            message : "car booking in created successfully",
-            data : result
+        const {id} = req.user 
+        const result = await CarBookingService.createCarBookingIntoDB(req?.body,id )
+        sendResponse(res, {
+            statusCode: httpStatus.OK,
+            success: true,
+            message: "car booking in created successfully",
+            data: result
+        })   
+})
+
+const getAllCarBooking = catchAsync( async(req:Request, res:Response)=>{
+        const result = await CarBookingService.getAllCarBookingFormDB(req.query)
+        sendResponse(res, {
+            statusCode: httpStatus.OK,
+            success: true,
+            message: "all car booking is resivied  successfully",
+            data: result
         })
-    } catch (error) {
-        next(error)
-    }
-}
+})
 
-const getAllCarBooking = async(req:Request, res:Response, next:NextFunction)=>{
-    try {
-        const result = await CarBookingService.getAllCarBookingFormDB()
+const getMyAllBookings = catchAsync(async(req:Request, res:Response)=>{
+    const {id}= req.user
+    console.log(id)
+    const result = await CarBookingService.getMyAllBookingsFormDB(id)
 
-        res.status(httpStatus.OK).json({
-            success : true,
-            message : "all car booking is resivied  successfully",
-            data : result
-        })
-    } catch (error) {
-        next(error)
-    }
-}
+    sendResponse(res, {
+        statusCode: httpStatus.OK,
+        success: true,
+        message: "My Bookings retrieved successfully",
+        data: result
+    })
+})
 
 
 
 export const CarBookingControllers = {
     createCarBooking,
     getAllCarBooking,
+    getMyAllBookings
    
 }

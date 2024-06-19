@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from "express";
+import { Request, Response } from "express";
 import { CarService } from "./Car.service";
 import httpStatus from "http-status";
 import catchAsync from "../../Utiles/catchAsync";
@@ -62,7 +62,7 @@ const returnAndUpdate = catchAsync(async (req: Request, res: Response) => {
         })
     }
     else {
-        const { carId } = req?.params
+        const { carId } = req.params
         const result = await CarService.updateCarIntoDB(carId, req?.body)
         res.status(httpStatus.OK).json({
             success: true,

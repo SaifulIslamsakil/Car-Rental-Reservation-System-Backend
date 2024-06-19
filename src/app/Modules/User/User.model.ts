@@ -34,10 +34,8 @@ const UserSchema = new Schema<TUser, User>({
 
 
 UserSchema.pre("save", async function (next) {
-    const user = this; // doc
-    // hashing password and save into DB
-    user.password = await bcrypt.hash(
-        user.password,
+    this.password = await bcrypt.hash(
+        this.password,
         Number(Confiqe.Salt_Rounds),
     );
     next()
@@ -49,9 +47,7 @@ UserSchema.post("save", function (doc, next) {
 })
  
 
-UserSchema.pre("find", function(){
-    console.log(this.find())
-})
+
 
 UserSchema.statics.isPasswordMatched = async function (
     plainTextPassword,
@@ -64,4 +60,4 @@ UserSchema.statics.isUserExists = async function(id:string){
     return await UserModel.findOne({_id:id})
 
 }
-export const UserModel = model<TUser, User>("user", UserSchema)
+export const UserModel = model<TUser, User>("User", UserSchema)

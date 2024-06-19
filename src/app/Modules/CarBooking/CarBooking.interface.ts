@@ -1,11 +1,12 @@
-import { Schema } from "mongoose";
+import { Types } from "mongoose";
+
 
 export type TCarBooking = {
-    date: Date;                 
-    user: string;                  
-    carId: string;                  
+    date: string;                 
+    user: Types.ObjectId;                  
+    car: Types.ObjectId;                  
     startTime: string;             
-    endTime: string | null;              
+    endTime: string | null;             
     totalCost: number;            
 }
 

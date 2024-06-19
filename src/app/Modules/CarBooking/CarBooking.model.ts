@@ -1,16 +1,16 @@
 import mongoose, { Schema, model } from "mongoose";
 import { TCarBooking } from "./CarBooking.interface";
-const CarBookingSchema = new mongoose.Schema({
+const CarBookingSchema = new mongoose.Schema<TCarBooking>({
     date: {
-        type: Date,
+        type: String,
         required: true,
     },
     user: {
-        type: String,
+        type:  Schema.Types.ObjectId,
         ref: ' User',
         required: true,
     },
-    carId: {
+    car: {
         type: Schema.Types.ObjectId,
         ref: 'Car',
         required: true,

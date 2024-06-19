@@ -67,7 +67,7 @@ const returnAndUpdate = (0, catchAsync_1.default)((req, res) => __awaiter(void 0
         });
     }
     else {
-        const { carId } = req === null || req === void 0 ? void 0 : req.params;
+        const { carId } = req.params;
         const result = yield Car_service_1.CarService.updateCarIntoDB(carId, req === null || req === void 0 ? void 0 : req.body);
         res.status(http_status_1.default.OK).json({
             success: true,

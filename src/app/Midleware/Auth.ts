@@ -9,15 +9,14 @@ import { UserModel } from "../Modules/User/User.model";
 
 const auth = (...payload: TUserRole[]) => {
     return catchAsync(async (req: Request, res: Response, next: NextFunction) => {
-        const [, token] = req?.headers?.token?.toString().split(" ")  as string[]
-
+        const [, token] = (req?.headers?.authorization as string).split(" ")
         if (!token) {
-            throw new AppError(httpStatus.UNAUTHORIZED, "You are not authorized!")
+            throw new AppError(httpStatus.UNAUTHORIZED, "You ss are not authorized!")
         }
 
         const decoded = jwt.verify(token as string, Confiqe.Access_Secret as string) as JwtPayload
 
-        const { role, id, email } = decoded
+        const { role, id } = decoded
 
         const user = await UserModel.findById(id)
 

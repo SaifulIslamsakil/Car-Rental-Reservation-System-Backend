@@ -1,6 +1,4 @@
 import { Model, Types } from "mongoose";
-import { UserModel } from "./User.model";
-
 export type TUser = {
   name: string;
   email: string;

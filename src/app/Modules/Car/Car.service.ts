@@ -4,6 +4,7 @@ import { TCar, TCarReturn } from "./Car.interface";
 import { CarModel } from "./Car.model";
 import { CarBookingModel } from "../CarBooking/CarBooking.model";
 import { convartTimeTohours } from "./Car.utils";
+import mongoose from "mongoose";
 
 
 const createCarIntoDB = async (payload: TCar) => {
@@ -48,56 +49,82 @@ const updateCarIntoDB = async (id: string, payload: Partial<TCar>) => {
 const carReturn = async (payload: TCarReturn) => {
     const { endTime, bookingId } = payload
     const carBookingData = await CarBookingModel.findById(bookingId)
+
     if (!carBookingData) {
         throw new AppError(httpStatus.NOT_FOUND, "car booking is not found")
     }
-    const CarData = await CarModel.findById(carBookingData?.carId)
+
+    const CarData = await CarModel.findById(carBookingData?.car)
+
     if (!CarData || CarData.status === "available") {
         throw new AppError(httpStatus.NOT_FOUND, "car booking is not found")
     }
 
-    const startTime = convartTimeTohours(carBookingData?.startTime)
-    const endsTime = convartTimeTohours(payload?.endTime)
-    if (startTime > endsTime) {
-        throw new AppError(httpStatus.BAD_REQUEST, "your end time must be big to start time")
-    }
-    if (endsTime > 24) {
-        throw new AppError(httpStatus.BAD_REQUEST, "your end time is invalid please input valid hours")
-    }
+    const session = await mongoose.startSession()
 
+    try {
+        session.startTransaction()
 
-    const totalCost = Number(((endsTime - startTime) * 10).toFixed(2))
-    if (totalCost < 0) {
-        throw new AppError(httpStatus.BAD_REQUEST, " your end time must be big to start time")
-    }
-    const updateDate = {
-        endTime,
-        totalCost
-    }
-    const updateCarBookingData = await CarBookingModel.findByIdAndUpdate(
-        bookingId,
-        updateDate,
-        {
-            new: true
+        const startTime = convartTimeTohours(carBookingData?.startTime)
+        const endsTime = convartTimeTohours(payload?.endTime)
+
+        if (startTime > endsTime) {
+            throw new AppError(httpStatus.BAD_REQUEST, "your end time must be big to start time")
         }
 
-    )
-
-    if (!updateCarBookingData) {
-        throw new AppError(httpStatus.BAD_REQUEST, " your booking car is not updated")
-    }
-
-    const updateCar = await CarModel.findByIdAndUpdate(carBookingData.carId, {
-        status: "available"
-    },
-        {
-            new: true
+        if (endsTime > 24) {
+            throw new AppError(httpStatus.BAD_REQUEST, "your end time is invalid please input valid hours")
         }
-    )
-    if (!updateCar) {
-        throw new AppError(httpStatus.BAD_REQUEST, " your  car is not updated")
+
+
+        const totalCost = Number(((endsTime - startTime) * CarData?.pricePerHour).toFixed(2))
+
+        if (totalCost < 0) {
+            throw new AppError(httpStatus.BAD_REQUEST, " your end time must be big to start time")
+        }
+
+        const updateDate = {
+            endTime,
+            totalCost
+        }
+
+
+        const updateCar = await CarModel.findByIdAndUpdate(carBookingData.car, {
+            status: "available"
+        },
+            {
+                new: true,
+                session
+            }
+        )
+
+        if (!updateCar) {
+            throw new AppError(httpStatus.BAD_REQUEST, " your  car is not updated")
+        }
+
+
+        const updateCarBookingData = await CarBookingModel.findByIdAndUpdate(
+            bookingId,
+            updateDate,
+            {
+                new: true,
+                session
+            }
+
+        ).populate("car")
+
+        if (!updateCarBookingData) {
+            throw new AppError(httpStatus.BAD_REQUEST, " your booking car is not updated")
+        }
+        await session.commitTransaction()
+        await session.endSession()
+        return updateCarBookingData
+    } catch (error) {
+        await session.abortTransaction()
+        await session.endSession()
+        throw new AppError(httpStatus.BAD_REQUEST, "faild to transition")
     }
-    return updateCarBookingData
+
 }
 
 

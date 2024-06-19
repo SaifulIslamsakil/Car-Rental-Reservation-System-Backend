@@ -11,7 +11,4 @@ const User_validation_1 = require("./User.validation");
 const Route = express_1.default.Router();
 Route.post("/signup", (0, ValidationRequest_1.default)(User_validation_1.userValidation.userValidationSchema), User_controller_1.UserController.createUser);
 Route.post("/signin", (0, ValidationRequest_1.default)(User_validation_1.userValidation.loginUserValidationSchema), User_controller_1.UserController.loginUser);
-Route.post('/refresh-token', 
-// ValidationRequest(userValidation.refreshTokenValidationSchema),
-User_controller_1.UserController.refreshToken);
 exports.UserRoute = Route;

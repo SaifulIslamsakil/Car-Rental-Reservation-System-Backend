@@ -27,15 +27,15 @@ exports.CarBookingModel = void 0;
 const mongoose_1 = __importStar(require("mongoose"));
 const CarBookingSchema = new mongoose_1.default.Schema({
     date: {
-        type: Date,
+        type: String,
         required: true,
     },
     user: {
-        type: String,
+        type: mongoose_1.Schema.Types.ObjectId,
         ref: ' User',
         required: true,
     },
-    carId: {
+    car: {
         type: mongoose_1.Schema.Types.ObjectId,
         ref: 'Car',
         required: true,

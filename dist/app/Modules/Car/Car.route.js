@@ -16,5 +16,5 @@ route.get("/", Car_controller_1.CarController.getAllCar);
 route.get("/:carId", Car_controller_1.CarController.getSingelCar);
 route.delete("/:carId", (0, Auth_1.default)(User_interface_1.USER_ROLE.admin), Car_controller_1.CarController.deleteCar);
 route.put("/:carId", (0, Auth_1.default)(User_interface_1.USER_ROLE.admin), (0, ValidationRequest_1.default)(Car_validation_1.CarValidations.updatecarValidationSchema), Car_controller_1.CarController.returnAndUpdate);
-route.put("/return", Car_controller_1.CarController.returnAndUpdate);
+route.put("/return", (0, Auth_1.default)(User_interface_1.USER_ROLE.user), Car_controller_1.CarController.returnAndUpdate);
 exports.CarRoute = route;

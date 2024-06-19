@@ -20,13 +20,13 @@ const Confiqe_1 = require("../Confiqe");
 const User_model_1 = require("../Modules/User/User.model");
 const auth = (...payload) => {
     return (0, catchAsync_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-        var _a, _b;
-        const [, token] = (_b = (_a = req === null || req === void 0 ? void 0 : req.headers) === null || _a === void 0 ? void 0 : _a.token) === null || _b === void 0 ? void 0 : _b.toString().split(" ");
+        var _a;
+        const [, token] = ((_a = req === null || req === void 0 ? void 0 : req.headers) === null || _a === void 0 ? void 0 : _a.authorization).split(" ");
         if (!token) {
-            throw new AppError_1.default(http_status_1.default.UNAUTHORIZED, "You are not authorized!");
+            throw new AppError_1.default(http_status_1.default.UNAUTHORIZED, "You ss are not authorized!");
         }
         const decoded = jsonwebtoken_1.default.verify(token, Confiqe_1.Confiqe.Access_Secret);
-        const { role, id, email } = decoded;
+        const { role, id } = decoded;
         const user = yield User_model_1.UserModel.findById(id);
         if (!user) {
             throw new AppError_1.default(http_status_1.default.NOT_FOUND, 'This user is not found !');

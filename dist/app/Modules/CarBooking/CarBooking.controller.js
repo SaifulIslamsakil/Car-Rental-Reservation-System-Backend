@@ -15,33 +15,40 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CarBookingControllers = void 0;
 const CarBooking_service_1 = require("./CarBooking.service");
 const http_status_1 = __importDefault(require("http-status"));
-const createCarBooking = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const result = yield CarBooking_service_1.CarBookingService.createCarBookingIntoDB(req === null || req === void 0 ? void 0 : req.body);
-        res.status(http_status_1.default.OK).json({
-            success: true,
-            message: "car booking in created successfully",
-            data: result
-        });
-    }
-    catch (error) {
-        next(error);
-    }
-});
-const getAllCarBooking = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const result = yield CarBooking_service_1.CarBookingService.getAllCarBookingFormDB();
-        res.status(http_status_1.default.OK).json({
-            success: true,
-            message: "all car booking is resivied  successfully",
-            data: result
-        });
-    }
-    catch (error) {
-        next(error);
-    }
-});
+const catchAsync_1 = __importDefault(require("../../Utiles/catchAsync"));
+const SendResponse_1 = require("../../Utiles/SendResponse");
+const createCarBooking = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { id } = req.user;
+    const result = yield CarBooking_service_1.CarBookingService.createCarBookingIntoDB(req === null || req === void 0 ? void 0 : req.body, id);
+    (0, SendResponse_1.sendResponse)(res, {
+        statusCode: http_status_1.default.OK,
+        success: true,
+        message: "car booking in created successfully",
+        data: result
+    });
+}));
+const getAllCarBooking = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield CarBooking_service_1.CarBookingService.getAllCarBookingFormDB(req.query);
+    (0, SendResponse_1.sendResponse)(res, {
+        statusCode: http_status_1.default.OK,
+        success: true,
+        message: "all car booking is resivied  successfully",
+        data: result
+    });
+}));
+const getMyAllBookings = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { id } = req.user;
+    console.log(id);
+    const result = yield CarBooking_service_1.CarBookingService.getMyAllBookingsFormDB(id);
+    (0, SendResponse_1.sendResponse)(res, {
+        statusCode: http_status_1.default.OK,
+        success: true,
+        message: "My Bookings retrieved successfully",
+        data: result
+    });
+}));
 exports.CarBookingControllers = {
     createCarBooking,
     getAllCarBooking,
+    getMyAllBookings
 };
