@@ -28,7 +28,6 @@ const getAllCarBooking = catchAsync( async(req:Request, res:Response)=>{
 
 const getMyAllBookings = catchAsync(async(req:Request, res:Response)=>{
     const {id}= req.user
-    console.log(id)
     const result = await CarBookingService.getMyAllBookingsFormDB(id)
 
     sendResponse(res, {

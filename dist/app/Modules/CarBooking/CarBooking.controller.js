@@ -38,7 +38,6 @@ const getAllCarBooking = (0, catchAsync_1.default)((req, res) => __awaiter(void 
 }));
 const getMyAllBookings = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.user;
-    console.log(id);
     const result = yield CarBooking_service_1.CarBookingService.getMyAllBookingsFormDB(id);
     (0, SendResponse_1.sendResponse)(res, {
         statusCode: http_status_1.default.OK,

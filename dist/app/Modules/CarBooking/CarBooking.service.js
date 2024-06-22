@@ -20,6 +20,10 @@ const CarBooking_model_1 = require("./CarBooking.model");
 const mongoose_1 = __importDefault(require("mongoose"));
 const createCarBookingIntoDB = (payload, userId) => __awaiter(void 0, void 0, void 0, function* () {
     payload.user = userId;
+    const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+    if (!dateRegex.test(payload.date)) {
+        throw new AppError_1.default(http_status_1.default.BAD_REQUEST, "'Date format must be yyyy-mm-dd");
+    }
     const carData = yield Car_model_1.CarModel.findById(payload === null || payload === void 0 ? void 0 : payload.car);
     if (!carData) {
         throw new AppError_1.default(http_status_1.default.BAD_REQUEST, "car is not exists");

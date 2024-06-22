@@ -9,6 +9,10 @@ import mongoose, { Types } from "mongoose";
 const createCarBookingIntoDB = async (payload: TCarBooking, userId: Types.ObjectId) => {
 
     payload.user = userId
+    const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+    if (!dateRegex.test(payload.date)) {
+        throw new AppError(httpStatus.BAD_REQUEST, "'Date format must be yyyy-mm-dd")
+    }
 
     const carData = await CarModel.findById(payload?.car)
 
