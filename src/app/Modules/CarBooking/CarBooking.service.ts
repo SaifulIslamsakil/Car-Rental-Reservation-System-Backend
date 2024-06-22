@@ -40,7 +40,7 @@ const createCarBookingIntoDB = async (payload: TCarBooking, userId: Types.Object
 
         await session.commitTransaction()
         await session.endSession()
-        return result[0].populate("car")
+        return (await result[0].populate("user")).populate("car")
     } catch (error) {
         await session.abortTransaction()
         await session.endSession()
@@ -49,22 +49,28 @@ const createCarBookingIntoDB = async (payload: TCarBooking, userId: Types.Object
 
 }
 
-const getAllCarBookingFormDB = async (query: any) => {
-    const { carId, date } = query
-    if (!carId && !date) {
-        const bookings = await CarBookingModel.find().populate("car")
-        return bookings
+const getAllCarBookingFormDB = async (payload: any) => {
+
+    const { carId, date } = payload;
+    const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+    const query: any = {};
+
+    if (carId) query.car = carId;
+    if (!dateRegex.test(date)) {
+        throw new AppError(httpStatus.BAD_REQUEST, "'Date format must be yyyy-mm-dd")
     }
-    const bookings = await CarBookingModel.find({ car: carId, date: date }).populate("car")
-    console.log(bookings.length) 
-    if (bookings.length === 0) {
-            throw new AppError(httpStatus.BAD_REQUEST, "car booking is not exists")
-        }
+    if (date) query.date = date;
+
+    const bookings = await CarBookingModel.find(query).populate("user").populate('car');
+
+    if (!bookings.length) {
+        throw new AppError(httpStatus.BAD_REQUEST, "Car booking does not exist")
+    }
     return bookings
 }
 
 const getMyAllBookingsFormDB = async (id: string) => {
-    const result = await CarBookingModel.find({ user: id }).populate("car")
+    const result = await CarBookingModel.find({ user: id }).populate("user").populate("car")
     if (result.length === 0) {
         throw new AppError(httpStatus.BAD_REQUEST, "user is not exists")
     }

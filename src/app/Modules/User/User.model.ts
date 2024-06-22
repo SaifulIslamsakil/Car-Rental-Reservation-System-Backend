@@ -19,6 +19,7 @@ const UserSchema = new Schema<TUser, User>({
     },
     password: {
         type: String,
+        select : -1
     },
     phone: {
         type: String,
@@ -60,4 +61,11 @@ UserSchema.statics.isUserExists = async function(id:string){
     return await UserModel.findOne({_id:id})
 
 }
-export const UserModel = model<TUser, User>("User", UserSchema)
+
+UserSchema.set('toJSON', {
+    transform: function (doc, ret, options) {
+        delete ret.password;
+        return ret;
+    }
+});
+export const UserModel = model<TUser, User>("User_Auth", UserSchema)

@@ -7,7 +7,7 @@ const CarBookingSchema = new mongoose.Schema<TCarBooking>({
     },
     user: {
         type:  Schema.Types.ObjectId,
-        ref: ' User',
+        ref: 'User_Auth',
         required: true,
     },
     car: {

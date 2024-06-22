@@ -32,6 +32,7 @@ const UserSchema = new mongoose_1.Schema({
     },
     password: {
         type: String,
+        select: -1
     },
     phone: {
         type: String,
@@ -64,4 +65,10 @@ UserSchema.statics.isUserExists = function (id) {
         return yield exports.UserModel.findOne({ _id: id });
     });
 };
-exports.UserModel = (0, mongoose_1.model)("User", UserSchema);
+UserSchema.set('toJSON', {
+    transform: function (doc, ret, options) {
+        delete ret.password;
+        return ret;
+    }
+});
+exports.UserModel = (0, mongoose_1.model)("User_Auth", UserSchema);
