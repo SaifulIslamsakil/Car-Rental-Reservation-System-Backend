@@ -64,7 +64,6 @@ const GlobalErrorHandling = (err: any, req: Request, res: Response, next: NextFu
         success: false,
         message,
         errorSources,
-        err,
         stack: Confiqe.Node_Env === 'development' ? err?.stack : null,
     });
 }
