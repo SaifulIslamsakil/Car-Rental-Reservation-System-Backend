@@ -69,8 +69,13 @@ const getAllCarBookingFormDB = (payload) => __awaiter(void 0, void 0, void 0, fu
     const query = {};
     if (carId)
         query.car = carId;
-    if (date)
+    if (date) {
+        const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+        if (!dateRegex.test(payload.date)) {
+            throw new AppError_1.default(http_status_1.default.BAD_REQUEST, "'Date format must be yyyy-mm-dd");
+        }
         query.date = date;
+    }
     const bookings = yield CarBooking_model_1.CarBookingModel.find(query).populate("user").populate('car');
     if (!bookings.length) {
         throw new AppError_1.default(http_status_1.default.BAD_REQUEST, "Car booking does not exist");

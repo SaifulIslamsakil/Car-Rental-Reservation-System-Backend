@@ -8,7 +8,7 @@ import mongoose, { ClientSession, Types } from "mongoose";
 
 
 const createCarBookingIntoDB = async (payload: BookingRequest, userId: Types.ObjectId) => {
-    const {carId, date, startTime} = payload
+    const { carId, date, startTime } = payload
     const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
     if (!dateRegex.test(payload.date)) {
         throw new AppError(httpStatus.BAD_REQUEST, "'Date format must be yyyy-mm-dd")
@@ -39,7 +39,7 @@ const createCarBookingIntoDB = async (payload: BookingRequest, userId: Types.Obj
         const bookingPayload = {
             date,
             startTime,
-            car:carId,
+            car: carId,
             user: userId
         }
 
@@ -67,7 +67,13 @@ const getAllCarBookingFormDB = async (payload: any) => {
 
     if (carId) query.car = carId;
 
-    if (date) query.date = date;
+    if (date) {
+        const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+        if (!dateRegex.test(payload.date)) {
+            throw new AppError(httpStatus.BAD_REQUEST, "'Date format must be yyyy-mm-dd")
+        }
+        query.date = date;
+    } 
 
     const bookings = await CarBookingModel.find(query).populate("user").populate('car');
 
