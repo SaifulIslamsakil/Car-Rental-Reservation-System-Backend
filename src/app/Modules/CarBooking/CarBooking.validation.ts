@@ -1,27 +1,27 @@
 import { z } from 'zod';
 
 const carBookingValidationSchema = z.object({
-  date: z.string().refine((val) => !isNaN(Date.parse(val)), {
-    message: "Invalid date format",
-  }).optional(),
-  user: z.string().regex(/^[0-9a-fA-F]{24}$/, {
-    message: "Invalid user ID format",
-  }).optional(),
-  car: z.string().regex(/^[0-9a-fA-F]{24}$/, {
-    message: "Invalid car ID format",
-  }).optional(),
-  startTime: z.string().regex(/^([01]\d|2[0-3]):([0-5]\d)$/, {
-    message: "Invalid time format, should be HH:mm in 24-hour format",
-  }).optional(),
-  endTime: z.string().regex(/^([01]\d|2[0-3]):([0-5]\d)$/, {
-    message: "Invalid time format, should be HH:mm in 24-hour format",
-  }).optional(),
-  totalCost: z.number().nonnegative().default(0),
-}).optional();
+  carId: z.string({
+    required_error: "Car ID is required",
+    invalid_type_error: "Car ID must be a string",
+  }),
+  date: z.string({
+    required_error: "Date is required",
+    invalid_type_error: "Date must be a string",
+  }).refine((val) => /^\d{4}-\d{2}-\d{2}$/.test(val), {
+    message: "Date format must be yyyy-mm-dd",
+  }),
+  startTime: z.string({
+    required_error: "Start time is required",
+    invalid_type_error: "Start time must be a string",
+  })
+});
+
+
 
 
 export const CarBookingValidation = {
-    carBookingValidationSchema
+  carBookingValidationSchema
 }
 
 

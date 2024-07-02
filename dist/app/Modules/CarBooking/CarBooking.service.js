@@ -13,18 +13,19 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CarBookingService = void 0;
+/* eslint-disable @typescript-eslint/no-explicit-any */
 const http_status_1 = __importDefault(require("http-status"));
 const AppError_1 = __importDefault(require("../../Errors/AppError"));
 const Car_model_1 = require("../Car/Car.model");
 const CarBooking_model_1 = require("./CarBooking.model");
 const mongoose_1 = __importDefault(require("mongoose"));
 const createCarBookingIntoDB = (payload, userId) => __awaiter(void 0, void 0, void 0, function* () {
-    payload.user = userId;
+    const { carId, date, startTime } = payload;
     const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
     if (!dateRegex.test(payload.date)) {
         throw new AppError_1.default(http_status_1.default.BAD_REQUEST, "'Date format must be yyyy-mm-dd");
     }
-    const carData = yield Car_model_1.CarModel.findById(payload === null || payload === void 0 ? void 0 : payload.car);
+    const carData = yield Car_model_1.CarModel.findById(carId);
     if (!carData) {
         throw new AppError_1.default(http_status_1.default.BAD_REQUEST, "car is not exists");
     }
@@ -34,7 +35,7 @@ const createCarBookingIntoDB = (payload, userId) => __awaiter(void 0, void 0, vo
     const session = yield mongoose_1.default.startSession();
     try {
         session.startTransaction();
-        const update = yield Car_model_1.CarModel.findByIdAndUpdate(payload === null || payload === void 0 ? void 0 : payload.car, {
+        const update = yield Car_model_1.CarModel.findByIdAndUpdate(carId, {
             status: "not available"
         }, {
             new: true,
@@ -43,13 +44,19 @@ const createCarBookingIntoDB = (payload, userId) => __awaiter(void 0, void 0, vo
         if (!update) {
             throw new AppError_1.default(http_status_1.default.BAD_REQUEST, "car is not updated");
         }
-        const result = yield CarBooking_model_1.CarBookingModel.create([payload], { session });
+        const bookingPayload = {
+            date,
+            startTime,
+            car: carId,
+            user: userId
+        };
+        const result = yield CarBooking_model_1.CarBookingModel.create([bookingPayload], { session });
         if (!result[0]) {
             throw new AppError_1.default(http_status_1.default.BAD_REQUEST, "car booking is not successfull");
         }
         yield session.commitTransaction();
         yield session.endSession();
-        return (yield result[0].populate("user")).populate("car");
+        return ((yield result[0].populate("user")).populate("car"));
     }
     catch (error) {
         yield session.abortTransaction();
@@ -59,13 +66,9 @@ const createCarBookingIntoDB = (payload, userId) => __awaiter(void 0, void 0, vo
 });
 const getAllCarBookingFormDB = (payload) => __awaiter(void 0, void 0, void 0, function* () {
     const { carId, date } = payload;
-    const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
     const query = {};
     if (carId)
         query.car = carId;
-    if (!dateRegex.test(date)) {
-        throw new AppError_1.default(http_status_1.default.BAD_REQUEST, "'Date format must be yyyy-mm-dd");
-    }
     if (date)
         query.date = date;
     const bookings = yield CarBooking_model_1.CarBookingModel.find(query).populate("user").populate('car');

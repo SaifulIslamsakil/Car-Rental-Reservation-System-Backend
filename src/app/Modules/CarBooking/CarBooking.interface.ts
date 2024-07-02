@@ -10,3 +10,9 @@ export type TCarBooking = {
     totalCost: number;            
 }
 
+ export type  BookingRequest = {
+    carId: string;
+    date: string;
+    startTime: string;
+}
+
