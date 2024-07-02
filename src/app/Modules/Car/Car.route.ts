@@ -12,7 +12,7 @@ route.get("/", CarController.getAllCar)
 route.get("/:carId", CarController.getSingelCar)
 route.delete("/:carId", auth(USER_ROLE.admin) , CarController.deleteCar)
 route.put("/:carId", auth(USER_ROLE.admin), ValidationRequest(CarValidations.updatecarValidationSchema), CarController.returnAndUpdate)
-route.put("/return",auth(USER_ROLE.user),CarController.returnAndUpdate)
+route.put("/return",auth(USER_ROLE.user), ValidationRequest(CarValidations.CarReturnValidationSchema), CarController.returnAndUpdate)
 
 
 export const CarRoute = route
