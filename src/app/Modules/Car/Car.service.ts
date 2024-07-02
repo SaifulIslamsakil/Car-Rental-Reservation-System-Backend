@@ -48,16 +48,20 @@ const updateCarIntoDB = async (id: string, payload: Partial<TCar>) => {
 
 const carReturn = async (payload: TCarReturn) => {
     const { endTime, bookingId } = payload
+
     const carBookingData = await CarBookingModel.findById(bookingId)
 
     if (!carBookingData) {
-        throw new AppError(httpStatus.NOT_FOUND, "car booking is not found")
+        throw new AppError(httpStatus.NOT_FOUND, "car booking is not exists")
     }
 
     const CarData = await CarModel.findById(carBookingData?.car)
 
-    if (!CarData || CarData.status === "available") {
-        throw new AppError(httpStatus.NOT_FOUND, "car booking is not found")
+    if (!CarData) {
+        throw new AppError(httpStatus.NOT_FOUND, "Car is not exists .")
+    }
+    if (CarData.status === "available") {
+        throw new AppError(httpStatus.NOT_FOUND, "already marked as available.")
     }
 
     const session = await mongoose.startSession()
@@ -69,11 +73,11 @@ const carReturn = async (payload: TCarReturn) => {
         const endsTime = convartTimeTohours(payload?.endTime)
 
         if (startTime > endsTime) {
-            throw new AppError(httpStatus.BAD_REQUEST, "your end time must be big to start time")
+            throw new AppError(httpStatus.BAD_REQUEST, "End time must be after the start time.")
         }
 
         if (endsTime > 24) {
-            throw new AppError(httpStatus.BAD_REQUEST, "your end time is invalid please input valid hours")
+            throw new AppError(httpStatus.BAD_REQUEST, "End time is invalid. Please input valid hours.")
         }
 
 

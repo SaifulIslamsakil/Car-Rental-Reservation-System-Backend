@@ -59,11 +59,14 @@ const carReturn = (payload) => __awaiter(void 0, void 0, void 0, function* () {
     const { endTime, bookingId } = payload;
     const carBookingData = yield CarBooking_model_1.CarBookingModel.findById(bookingId);
     if (!carBookingData) {
-        throw new AppError_1.default(http_status_1.default.NOT_FOUND, "car booking is not found");
+        throw new AppError_1.default(http_status_1.default.NOT_FOUND, "car booking is not exists");
     }
     const CarData = yield Car_model_1.CarModel.findById(carBookingData === null || carBookingData === void 0 ? void 0 : carBookingData.car);
-    if (!CarData || CarData.status === "available") {
-        throw new AppError_1.default(http_status_1.default.NOT_FOUND, "car booking is not found");
+    if (!CarData) {
+        throw new AppError_1.default(http_status_1.default.NOT_FOUND, "Car is not exists .");
+    }
+    if (CarData.status === "available") {
+        throw new AppError_1.default(http_status_1.default.NOT_FOUND, "already marked as available.");
     }
     const session = yield mongoose_1.default.startSession();
     try {
@@ -71,10 +74,10 @@ const carReturn = (payload) => __awaiter(void 0, void 0, void 0, function* () {
         const startTime = (0, Car_utils_1.convartTimeTohours)(carBookingData === null || carBookingData === void 0 ? void 0 : carBookingData.startTime);
         const endsTime = (0, Car_utils_1.convartTimeTohours)(payload === null || payload === void 0 ? void 0 : payload.endTime);
         if (startTime > endsTime) {
-            throw new AppError_1.default(http_status_1.default.BAD_REQUEST, "your end time must be big to start time");
+            throw new AppError_1.default(http_status_1.default.BAD_REQUEST, "End time must be after the start time.");
         }
         if (endsTime > 24) {
-            throw new AppError_1.default(http_status_1.default.BAD_REQUEST, "your end time is invalid please input valid hours");
+            throw new AppError_1.default(http_status_1.default.BAD_REQUEST, "End time is invalid. Please input valid hours.");
         }
         const totalCost = Number(((endsTime - startTime) * (CarData === null || CarData === void 0 ? void 0 : CarData.pricePerHour)).toFixed(2));
         if (totalCost < 0) {
