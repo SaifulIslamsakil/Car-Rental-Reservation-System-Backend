@@ -99,7 +99,7 @@ const carReturn = (payload) => __awaiter(void 0, void 0, void 0, function* () {
         const updateCarBookingData = yield CarBooking_model_1.CarBookingModel.findByIdAndUpdate(bookingId, updateDate, {
             new: true,
             session
-        }).populate("car");
+        }).populate("car").populate("user");
         if (!updateCarBookingData) {
             throw new AppError_1.default(http_status_1.default.BAD_REQUEST, " your booking car is not updated");
         }

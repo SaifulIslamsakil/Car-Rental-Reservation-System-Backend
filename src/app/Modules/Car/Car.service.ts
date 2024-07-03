@@ -115,7 +115,7 @@ const carReturn = async (payload: TCarReturn) => {
                 session
             }
 
-        ).populate("car")
+        ).populate("car").populate("user")
 
         if (!updateCarBookingData) {
             throw new AppError(httpStatus.BAD_REQUEST, " your booking car is not updated")

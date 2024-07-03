@@ -11,8 +11,6 @@ export type TCar = {
     isDeleted?:boolean
 }
 
-
-
 export type TCarReturn = {
     bookingId : Schema.Types.ObjectId;
     endTime: string
